@@ -38,7 +38,9 @@ public class DatabaseConnect {
 			}
 				
 		}catch(SQLException e){
-			System.out.println("Error Message: DatabaseConnect_getMapFilename SQLEXCEPTION.");
+			String mesg = "Error Message: DatabaseConnect_getMapFilename SQLEXCEPTION.";
+			System.out.println(mesg);
+			Utils.addErrorToLog(mesg);
 			System.out.println(e.getMessage());
 		}
 		
@@ -77,7 +79,7 @@ public class DatabaseConnect {
 				float y_coord = rs.getInt("map_coord_y") * Tile.TILE_HEIGHT;
 				npc = new NPC(handler, rs.getString("npc_id"), rs.getString("map_id"), x_coord, y_coord, 64, 64, 
 						rs.getString("name"), rs.getString("img_filename"), rs.getString("npc_type"));
-				System.out.println("Message: DatabaseConnect_createNPCs npc loc: " + (new Point((int)x_coord, (int)y_coord)));
+				System.out.println("Update Message: DatabaseConnect_createNPCs npc loc: " + (new Point((int)x_coord, (int)y_coord)));
 				// create dialogs
 				sql = "SELECT * FROM dialog WHERE npc_id=" + "\"" + rs.getString("npc_id") + "\"";
 				Statement dialogStmt = conn.createStatement();
@@ -96,11 +98,16 @@ public class DatabaseConnect {
 			try{
 				stmt.close();
 			}catch(SQLException i){
-				System.out.println("Error closing connections: stmt");
+				String mesg = "Error Message: DatabaseConnect_createNPC Error closing connections: stmt";
+				System.out.println(mesg);
+				Utils.addErrorToLog(mesg);
+				System.out.println(i.getMessage());
 			}
 		}
 		if(npc == null){
-			System.out.println("Error Message: DatabaseConnect_createNPC NPC IS NULL");
+			String mesg = "Error Message: DatabaseConnect_createNPC npc object is null";
+			System.out.println(mesg);
+			Utils.addErrorToLog(mesg);
 		}
 		return npcs;
 	}
@@ -115,7 +122,7 @@ public class DatabaseConnect {
 			try{
 				conn.close();
 			}catch(SQLException k){
-				System.out.println("Error closing connections: conn");
+				System.out.println("Error Message: DatabaseConnect_getQuest Error closing connections: conn");
 			}
 		}
 		return null;
@@ -245,7 +252,7 @@ public class DatabaseConnect {
 			try{
 				conn.close();
 			}catch(SQLException k){
-				System.out.println("Error closing connections: conn");
+				System.out.println("Error Message: DatabaseConnect_getDialog Error closing connections: conn");
 			}
 		}
 		return null;
@@ -295,12 +302,12 @@ public class DatabaseConnect {
 			try{
 				stmt.close();
 			}catch(SQLException i){
-				System.out.println("Error closing connections: stmt");
+				System.out.println("Error Message: DatabaseConnect_dialog Error closing connections: stmt");
 			}
 			try{
 				rs.close();
 			}catch(SQLException m){
-				System.out.println("Error closing connections: rs");
+				System.out.println("Error Message: DatabaseConnect_dialog Error closing connections: rs");
 			}
 		}
 		return null;
@@ -310,13 +317,13 @@ public class DatabaseConnect {
         Connection conn = null;
         try {
             // db parameters
-            String url = "jdbc:sqlite:C:\\Users\\Virassan\\Documents\\!ThunderDome\\Extra Files and Things\\SQLite Database\\testing.db";
+            String url = "jdbc:sqlite::resource:testing.db";
             // create a connection to the database
             conn = DriverManager.getConnection(url);
-            
-            System.out.println("Update Message: DatabaseConnect_connect Connection to SQLite has been established.");
-            
         } catch (SQLException e) {
+        	String mesg = "Error Message: DatabaseConnect_connect SQL EXCEPTION";
+        	System.out.println(mesg);
+        	Utils.addErrorToLog(mesg);
             System.out.println(e.getMessage());
         } 
         return conn;

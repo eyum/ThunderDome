@@ -27,10 +27,15 @@ public class SaveRead {
 			JSONObject jsonObject = (JSONObject)JSONValue.parse(new FileReader(filepath));
 			return jsonObject;
 		}catch(FileNotFoundException f){
-			System.out.println("Error Message: SaveRead_loadFile FILE NOT FOUND " + filepath);
+			String mesg = "Error Message: SaveRead_loadFile FILE NOT FOUND " + filepath;
+			System.out.println(mesg);
+			Utils.addErrorToLog(mesg);
 			f.printStackTrace();
-		}catch(IOException i){
-			System.out.println("Error Message: SaveRead_loadFile IOEXCEPTION " + filepath);
+		}catch(Exception i){
+			String mesg = "Error Message: SaveRead_loadFile UNKNOWN EXCEPTION " + filepath + System.getProperty("line.separator") +
+					i.getMessage();
+			System.out.println(mesg);
+			Utils.addErrorToLog(mesg);
 			i.printStackTrace();
 		}
 		return null;
@@ -40,7 +45,10 @@ public class SaveRead {
 		try{
 			return (String)json.get("map");
 		}catch(Exception e){
-			System.out.println("Error Message: SaveRead_loadMapID EXCEPTION");
+			String mesg = "Error Message: SaveRead_loadMapID UNKNOWN EXCEPTION" + System.getProperty("line.separator") +
+					e.getMessage();
+			System.out.println(mesg);
+			Utils.addErrorToLog(mesg);
 			e.printStackTrace();
 			return null;
 		}
@@ -65,7 +73,10 @@ public class SaveRead {
 			y = (Long)jsonObject.get("y");
 			map = (String)jsonObject.get("map");
 		}catch (Exception e){
-			System.out.println("Error Message: SaveRead_loadPlayer Something Went Wrong.");
+			String mesg = "Error Message: SaveRead_loadPlayer UNKNOWN EXCEPTION" + System.getProperty("line.separator") +
+					e.getMessage();
+			System.out.println(mesg);
+			Utils.addErrorToLog(mesg);
 			e.printStackTrace();
 		}
 		// Set Values
@@ -75,10 +86,14 @@ public class SaveRead {
 		}catch(NullPointerException e){
 			if(playerName.equals("null") || playerName == null){
 				player.setName("Default");
-				System.out.println("Error Message: SaveRead_loadPlayer playerName is null. Using Default");
+				String mesg = "Error Message: SaveRead_loadPlayer playerName is null. Using Default";
+				System.out.println(mesg);
+				Utils.addErrorToLog(mesg);
 			}if(map == null){
 				handler.setMapID("haj_vi_01");
-				System.out.println("Error Message: SaveRead_loadPlayer map is null. Using Default");
+				String mesg = "Error Message: SaveRead_loadPlayer map is null. Using Default";
+				System.out.println(mesg);
+				Utils.addErrorToLog(mesg);
 			}
 		}
 		if(playerLevel == 0){
@@ -127,7 +142,9 @@ public class SaveRead {
 				equip.add(item);
 			}
 		}catch(NullPointerException e){
-			System.out.println("Error Message: SaveRead_loadEquip something is null");
+			String mesg = "Error Message: SaveRead_loadEquip NULL VALUE";
+			System.out.println(mesg);
+			Utils.addErrorToLog(mesg);
 			e.printStackTrace();
 		}
 		// Set Values
@@ -138,7 +155,9 @@ public class SaveRead {
 				}
 			}
 		}catch(NullPointerException e){
-			System.out.println("Error Message: SaveRead_loadEquip something is null");
+			String mesg = "Error Message: SaveRead_loadEquip NULL VALUE";
+			System.out.println(mesg);
+			Utils.addErrorToLog(mesg);
 			e.printStackTrace();
 		}
 	}
@@ -156,7 +175,9 @@ public class SaveRead {
 				inventory.put(item, stack);
 			}
 		}catch(NullPointerException e){
-			System.out.println("Error Message: SaveRead_loadEquip something is null");
+			String mesg = "Error Message: SaveRead_loadInventory NULL VALUE";
+			System.out.println(mesg);
+			Utils.addErrorToLog(mesg);
 			e.printStackTrace();
 		}
 		// Set values
@@ -165,7 +186,9 @@ public class SaveRead {
 				player.getInventory().addItems(Item.valueOf(str), inventory.get(str).intValue(), false);
 			}
 		}catch(NullPointerException e){
-			System.out.println("Error Message: SaveRead_loadEquip something is null");
+			String mesg = "Error Message: SaveRead_loadInventory NULL VALUE";
+			System.out.println(mesg);
+			Utils.addErrorToLog(mesg);
 			e.printStackTrace();
 		}
 	}
@@ -183,7 +206,9 @@ public class SaveRead {
 				skillBar[index.intValue()] = skill;
 			}
 		}catch(NullPointerException e){
-			System.out.println("Error Message: SaveRead_loadEquip something is null");
+			String mesg = "Error Message: SaveRead_loadSkillBar NULL VALUE";
+			System.out.println(mesg);
+			Utils.addErrorToLog(mesg);
 			e.printStackTrace();
 		}
 		// Set Values
@@ -211,7 +236,9 @@ public class SaveRead {
 				questIDs.put(quest, b);
 			}
 		}catch(NullPointerException e){
-			System.out.println("Error Message: SaveRead_loadEquip something is null");
+			String mesg = "Error Message: SaveRead_loadQuests NULL VALUE";
+			System.out.println(mesg);
+			Utils.addErrorToLog(mesg);
 			e.printStackTrace();
 		}
 		// Set Values
@@ -235,7 +262,9 @@ public class SaveRead {
 				buffs.put(buff, buffTime);
 			}
 		}catch(NullPointerException e){
-			System.out.println("Error Message: SaveRead_loadEquip something is null");
+			String mesg = "Error Message: SaveRead_loadBuffs NULL VALUE";
+			System.out.println(mesg);
+			Utils.addErrorToLog(mesg);
 			e.printStackTrace();
 		}
 		// Set Values
@@ -256,7 +285,9 @@ public class SaveRead {
 				skills.add(skill);
 			}
 		}catch(NullPointerException e){
-			System.out.println("Error Message: SaveRead_loadEquip something is null");
+			String mesg = "Error Message: SaveRead_loadSkills NULL VALUE";
+			System.out.println(mesg);
+			Utils.addErrorToLog(mesg);
 			e.printStackTrace();
 		}
 		// Set Values
@@ -279,7 +310,9 @@ public class SaveRead {
 				npcHash.put(npc, new ArrayList<Boolean>(Arrays.asList(met, liked)));
 			}
 		}catch(NullPointerException e){
-			System.out.println("Error Message: SaveRead_loadEquip something is null");
+			String mesg = "Error Message: SaveRead_loadNPCs NULL VALUE";
+			System.out.println(mesg);
+			Utils.addErrorToLog(mesg);
 			e.printStackTrace();
 		}
 		// Set Values

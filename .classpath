@@ -2,6 +2,7 @@
 <classpath>
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.8"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/LWJGL3"/>
 	<classpathentry kind="lib" path="res"/>
 	<classpathentry kind="lib" path="C:/Users/Virassan/Documents/!ThunderDome/ThunderDome/ThunderDome/lib/jackson-core-2.8.3.jar"/>
 	<classpathentry kind="lib" path="C:/Users/Virassan/Documents/!ThunderDome/ThunderDome/ThunderDome/lib/json-simple-1.1.1.jar"/>

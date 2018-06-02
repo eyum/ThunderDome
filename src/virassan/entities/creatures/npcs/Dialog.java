@@ -8,6 +8,7 @@ import virassan.items.Item;
 import virassan.main.Game;
 import virassan.main.Handler;
 import virassan.main.states.States;
+import virassan.utils.Utils;
 
 public class Dialog {
 
@@ -189,8 +190,9 @@ public class Dialog {
 				}
 			}
 		}catch(NullPointerException k){
-			System.out.println("Error Message: Dialog_dialog something is NULL.");
-			System.out.println("Current Event Info: " + currentEventInfo);
+			String mesg = "Error Message: Dialog_dialog something is NULL." + System.getProperty("line.separator") + "Current Event Info: " + currentEventInfo;
+			System.out.println(mesg);
+			Utils.addErrorToLog(mesg);
 			k.printStackTrace();
 		}catch(Exception e){
 			e.printStackTrace();
@@ -202,6 +204,10 @@ public class Dialog {
 			String itemID = (String)currentEventInfo.get(1);
 			Game.handler.getPlayer().getInventory().addItems(Item.valueOf(itemID), (int)currentEventInfo.get(2), false);
 		}catch(Exception e){
+			String mesg = "Error Message: Dialog_giveItem UNKNOWN EXCEPTION" + System.getProperty("line.separator") +
+					e.getMessage();
+			System.out.println(mesg);
+			Utils.addErrorToLog(mesg);
 			e.printStackTrace();
 		}
 	}
@@ -224,12 +230,15 @@ public class Dialog {
 					reqsMet = b && reqsMet;
 				}
 		}catch(NullPointerException e){
-			System.out.println("Error Message: Dialog_isMet_NULLPOINTEREXCEPTION");
+			String mesg = "Error Message: Dialog_isMet_NULLPOINTEREXCEPTION";
+			System.out.println(mesg);
+			Utils.addErrorToLog(mesg);
 		}catch(Exception k){
-			System.out.println("Error Message: Dialog_isMet Unknown Exception");
-			System.out.println("Index 0: " + requirements.get(key).get(0));
-			System.out.println("Index 1: " + requirements.get(key).get(1));
-			//print stack trace
+			String mesg = "Error Message: Dialog_isMet Unknown Exception" + System.getProperty("line.separator") + 
+					"Index 0: " + requirements.get(key).get(0) + System.getProperty("line.separator") + "Index 1: " + requirements.get(key).get(1);
+			System.out.println(mesg);
+			Utils.addErrorToLog(mesg);
+			k.printStackTrace();
 		}
 	}
 	
@@ -248,11 +257,15 @@ public class Dialog {
 				reqsMet = b && reqsMet;
 			}
 		}catch(NullPointerException e){
-			System.out.println("Error Message: Dialog_isQuest_NULLPOINTEREXCEPTION, DialogID: " + DIALOG_ID);
+			String mesg = "Error Message: Dialog_isQuest_NULLPOINTEREXCEPTION, DialogID: " + DIALOG_ID;
+			System.out.println(mesg);
+			Utils.addErrorToLog(mesg);
 			e.printStackTrace();
 		}catch(Exception k){
-			System.out.println("Error Message: Dialog_isQuest Unknown Exception");
-			System.out.println("DialogID: " + DIALOG_ID + "Key: " + key + ", Index 0: " + requirements.get(key).get(0) + ", Index 1: " + requirements.get(key).get(1));
+			String mesg = "Error Message: Dialog_isQuest Unknown Exception" + System.getProperty("line.separator") + 
+					"DialogID: " + DIALOG_ID + "Key: " + key + ", Index 0: " + requirements.get(key).get(0) + ", Index 1: " + requirements.get(key).get(1);
+			System.out.println(mesg);
+			Utils.addErrorToLog(mesg);
 			k.printStackTrace();
 		}//Jesse was here
 	}
@@ -265,8 +278,6 @@ public class Dialog {
 			String npcID = (String)requirements.get(key).get(0);
 			int bool = Integer.parseInt((String)requirements.get(key).get(1));
 			boolean b = Game.handler.getPlayer().isNPCLiked(npcID);
-			System.out.println("Message: Dialog_isLiked bool is: " + bool);
-			System.out.println("Message: Dialog_isLiked NPC liked: " + b);
 			if(bool == 0){
 				// if npc is NOT met then reqsMet = reqsMet && true
 				// if npc is met then reqsMet = false
@@ -277,10 +288,15 @@ public class Dialog {
 				reqsMet = b && reqsMet;
 				}
 		}catch(NullPointerException e){
-			System.out.println("Error Message: Dialog_isLiked_NULLPOINTEREXCEPTION, DialogID: " + DIALOG_ID);
+			String mesg = "Error Message: Dialog_isLiked NULL VALUE, DialogID: " + DIALOG_ID;
+			System.out.println(mesg);
+			Utils.addErrorToLog(mesg);
 			e.printStackTrace();
 		}catch(Exception k){
-			System.out.println("DialogID: " + DIALOG_ID + "Key: " + key + ", Index 0: " + requirements.get(key).get(0) + ", Index 1: " + requirements.get(key).get(1));
+			String mesg = "Error Message: Dialog_isLiked UNKNOWN EXCEPTION" + System.getProperty("line.separator") + 
+					"DialogID: " + DIALOG_ID + "Key: " + key + ", Index 0: " + requirements.get(key).get(0) + ", Index 1: " + requirements.get(key).get(1);
+			System.out.println(mesg);
+			Utils.addErrorToLog(mesg);
 			k.printStackTrace();
 		}
 	}
@@ -297,11 +313,15 @@ public class Dialog {
 				reqsMet = b && reqsMet;
 			}
 		}catch(NullPointerException e){
-			System.out.println("Error Message: Dialog_questComp_NULLPOINTEREXCEPTION, DialogID: " + DIALOG_ID);
+			String mesg = "Error Message: Dialog_questComp_NULLPOINTEREXCEPTION, DialogID: " + DIALOG_ID;
+			System.out.println(mesg);
+			Utils.addErrorToLog(mesg);
 			e.printStackTrace();
 		}catch(Exception k){
-			System.out.println("Error Message: Dialog_questComp Unknown Exception");
-			System.out.println("DialogID: " + DIALOG_ID + "Key: " + key + ", Index 0: " + requirements.get(key).get(0) + ", Index 1: " + requirements.get(key).get(1));
+			String mesg = "Error Message: Dialog_questComp Unknown Exception" + System.getProperty("line.separator") + 
+					"DialogID: " + DIALOG_ID + "Key: " + key + ", Index 0: " + requirements.get(key).get(0) + ", Index 1: " + requirements.get(key).get(1);
+			System.out.println(mesg);
+			Utils.addErrorToLog(mesg);
 			k.printStackTrace();
 		}
 	}

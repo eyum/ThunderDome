@@ -11,6 +11,7 @@ import virassan.entities.creatures.player.Player;
 import virassan.entities.statics.StaticEntity;
 import virassan.main.Display;
 import virassan.main.Handler;
+import virassan.utils.Utils;
 
 public class EntityManager {
 
@@ -52,29 +53,6 @@ public class EntityManager {
 					entities.get(i).tick(delta);
 				}
 			}else{
-				if(entities.get(i) instanceof Enemy){
-					/*
-					if(handler.getPlayer().getKillList().containsKey(((Enemy)entities.get(i)).getEnemyType())){
-						if(handler.getPlayer().getKillList().get(((Enemy)entities.get(i)).getEnemyType()) != null){
-							handler.getPlayer().getKillList().replace(((Enemy)entities.get(i)).getEnemyType(), handler.getPlayer().getKillList().get(((Enemy)entities.get(i)).getEnemyType())+1);
-						}else{
-							handler.getPlayer().getKillList().replace(((Enemy)entities.get(i)).getEnemyType(), 1);
-						}
-					}else{
-						handler.getPlayer().getKillList().put(((Enemy)entities.get(i)).getEnemyType(), 1);
-					}
-					*/
-					System.out.println("Message: EntityManager_tick " + handler.getPlayer().getKillEnemySpecies() + " : " + handler.getPlayer().getKillEnemyID());
-					/*
-					for(QuestTracker quest : handler.getPlayer().getQuestLog().getActive()){
-						if(quest.getQuest().getHashMap().containsKey(((Enemy)entities.get(i)).getSpecies())){
-							quest.addEnemyCount(((Enemy)entities.get(i)).getSpecies());
-						}else if(quest.getQuest().getHashMap().containsKey(((Enemy)entities.get(i)).getEnemyID())){
-							quest.addEnemyCount(((Enemy)entities.get(i)).getEnemyID());
-						}
-					}
-					*/
-				}
 				entities.remove(entities.get(i));
 				i--;
 			}
@@ -103,7 +81,9 @@ public class EntityManager {
 					e.render(g);
 				}
 			}catch(NullPointerException k){
-				System.out.println("Error Message: EntityManager_render Entity is: " + e);
+				String mesg = "Error Message: EntityManager_render Entity is: " + e;
+				System.out.println(mesg);
+				Utils.addErrorToLog(mesg);
 				k.printStackTrace();
 			}
 		}

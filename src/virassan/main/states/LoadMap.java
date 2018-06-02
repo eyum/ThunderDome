@@ -10,6 +10,7 @@ import virassan.main.Display;
 import virassan.main.Handler;
 import virassan.utils.DatabaseConnect;
 import virassan.utils.MapRead;
+import virassan.utils.Utils;
 
 public class LoadMap {
 
@@ -45,7 +46,7 @@ public class LoadMap {
 	public void tick(double delta){
 		String mapID = handler.getMapID();
 		String filepath = "";
-		filepath = "res\\worlds\\maps\\" + DatabaseConnect.getMapFilename(mapID);
+		filepath = Utils.mapDir + DatabaseConnect.getMapFilename(mapID);
 		
 		if(curLoadCount == 0){
 			json = MapRead.loadFile(filepath);

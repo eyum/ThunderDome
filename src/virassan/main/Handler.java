@@ -26,6 +26,7 @@ import virassan.main.states.MenuSkills;
 import virassan.main.states.NPCDialog;
 import virassan.main.states.NPCShop;
 import virassan.main.states.States;
+import virassan.utils.Utils;
 import virassan.world.maps.Map;
 
 /**
@@ -83,6 +84,9 @@ public class Handler {
 	 */
 	public Handler(Game game){
 		this.game = game;
+		int w = game.getDisplayWidth();
+		int h = game.getDisplayHeight();
+		gameCamera = new GameCamera(this, 0,0, w, h);
 		//isNaming = true;
 		player = new Player(this);
 		LAUNCHLOAD = new LaunchLoad(this);
@@ -100,7 +104,6 @@ public class Handler {
 		NPCSHOP = new NPCShop(this);
 		GAMESTATE = new GameState(this);
 		curState = States.LaunchMenu;
-		gameCamera = new GameCamera(this, 0,0);
 	}
 	
 	/**
@@ -226,7 +229,9 @@ public class Handler {
 	public void setPlayer(Player player){
 		this.player = player;
 		if(map == null){
-			System.out.println("Error Message: Handler_setPlayer map is null.");
+			String mesg = "Error Message: Handler_setPlayer map is null.";
+			System.out.println(mesg);
+			Utils.addErrorToLog(mesg);
 		}
 		map.getEntityManager().setPlayer(player);
 	}
@@ -264,25 +269,11 @@ public class Handler {
 	}
 
 	public int getWidth(){
-		int w = 0;
-		try{
-			w = (int)gameCamera.getWidth();
-		}catch(NullPointerException e){
-			w = game.getDisplayWidth();
-			System.out.println("Error Message: Handler_getWidth set width to Display width");
-		}
-		return w;
+		return (int)gameCamera.getWidth();
 	}
 	
 	public int getHeight(){
-		int h = 0;
-		try{
-			h = (int)gameCamera.getHeight();
-		}catch(NullPointerException e){
-			h = game.getDisplayHeight();
-			System.out.println("Error Message: Handler_getHeight set height to Display height");
-		}
-		return h;
+		return (int)gameCamera.getHeight();
 	}
 	
 	public GameCamera getGameCamera(){

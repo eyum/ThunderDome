@@ -6,6 +6,7 @@ import virassan.entities.EntityManager;
 import virassan.gfx.Assets;
 import virassan.main.Display;
 import virassan.main.Handler;
+import virassan.utils.Utils;
 import virassan.utils.Vector2F;
 
 
@@ -44,8 +45,11 @@ public class Map{
 		this.spawn_y = spawn_y;
 		this.worldTiles = worldTiles;
 		entityManager = new EntityManager(handler);
-		if(handler.getPlayer() == null)
-			System.out.println("Error Message: Map_MapConstructor Player in Handler is null.");
+		if(handler.getPlayer() == null){
+			String mesg = "Error Message: Map_MapConstructor Player in Handler is null.";
+			System.out.println(mesg);
+			Utils.addErrorToLog(mesg);
+		}
 		entityManager.setPlayer(handler.getPlayer());
 	}
 	

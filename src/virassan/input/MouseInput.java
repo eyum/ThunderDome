@@ -74,7 +74,7 @@ public class MouseInput implements MouseListener, MouseMotionListener{
 			leftPressed = true;
 			if(!doubleClicks.isEmpty()){
 				double distance = doubleClicks.element().getObject().distance((e.getPoint()));
-				if(doubleTimer < 300 && distance < 10){
+				if(doubleTimer < 200 && distance < 5){
 					doubleClick = true;
 					doubleClicks.clear();
 				}else{
@@ -90,7 +90,6 @@ public class MouseInput implements MouseListener, MouseMotionListener{
 				startDrag = e.getPoint();
 			}
 			leftClicks.add(new Node(e.getPoint()));
-			System.out.println("UpdateMessage: MouseInput_mousePressed left mouse clicked");
 			doubleTimer = 0;
 		}else if(e.getButton() == MouseEvent.BUTTON3){ //right button
 			rightPressed = true;

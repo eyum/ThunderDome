@@ -58,7 +58,9 @@ public class NPCDialog {
 			g.drawString(player.getCurrentNPC().getCurrentDialog().getText(), x + 15, y + 35);
 		}catch(NullPointerException e){
 			g.drawString("", x + 15, y + 35);
-			System.out.println("Error Message: NPCDialog_render current dialog text is null: " + player.getCurrentNPC().getCurrentDialog());
+			String mesg = "Error Message: NPCDialog_render current dialog text is null: " + player.getCurrentNPC().getCurrentDialog();
+			System.out.println(mesg);
+			Utils.addErrorToLog(mesg);
 		}
 		g.drawImage(Assets.button_a, x + 995, y + 105, null);
 		if(isResponseMenu){
@@ -220,7 +222,9 @@ public class NPCDialog {
 					ran = gen.nextInt(bounds);
 				}
 				if(player.getCurrentNPC().getDefaultDialog().isEmpty()){
-					System.out.println("Error Message: NPCDialog_NPCInteract npc defaultDialog array is somehow empty");
+					String mesg = "Error Message: NPCDialog_NPCInteract npc defaultDialog array is somehow empty";
+					System.out.println(mesg);
+					Utils.addErrorToLog(mesg);
 				}else{
 					curDia = player.getCurrentNPC().getDefaultDialog().get(ran);
 				}
@@ -268,7 +272,9 @@ public class NPCDialog {
 				return d;
 			}
 		}
-		System.out.println("Error Message: NPCDialog_getDialog dialog not found for current NPC");
+		String mesg = "Error Message: NPCDialog_getDialog dialog not found for current NPC";
+		System.out.println(mesg);
+		Utils.addErrorToLog(mesg);
 		return null;
 	}
 	

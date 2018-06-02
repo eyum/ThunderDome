@@ -34,16 +34,12 @@ public class LaunchMenu {
 	
 	public void tick(double delta){
 		if(isSave){
-			boolean saveFile = new File("res\\saves\\testsave2.json").isFile();
+			boolean saveFile = new File(Utils.saveDir + "testsave2.json").isFile();
+			keyInput.tick(delta);
 			if(saveFile){
-				keyInput.tick(delta);
-				if(keyInput.enter){
-					//TODO: create a New Game
-					isSave = false;
-					
-				}else if(keyInput.space){
+				if(keyInput.space){
 					String filepath = "";
-					File[] files = Utils.fileFinder("res\\saves\\", ".json");
+					File[] files = Utils.fileFinder(Utils.saveDir, ".json");
 					filepath = files[files.length - 1].toString();
 					Handler.LAUNCHLOAD.setFilepath(filepath);
 					isSave = false;
@@ -51,6 +47,10 @@ public class LaunchMenu {
 				}
 			}else{
 				isSave = false;
+			}
+			if(keyInput.enter){
+				isSave = false;
+				handler.setState(States.LaunchNew);
 			}
 		}
 	}

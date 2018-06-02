@@ -99,8 +99,8 @@ public class Merchant extends Creature{
 
 	@Override
 	public void render(Graphics g) {
-		float xrel = vector.normalize().dX ;//* handler.getGameCamera().getWidth();
-		float yrel = vector.normalize().dY ;//* handler.getGameCamera().getHeight();
+		float xrel = position.normalize().dX ;//* handler.getGameCamera().getWidth();
+		float yrel = position.normalize().dY ;//* handler.getGameCamera().getHeight();
 		
 		g.setFont(new Font("Verdana", Font.PLAIN, 12));
 		g.drawImage(image, (int)(xrel - handler.getGameCamera().getxOffset()), (int)(yrel - handler.getGameCamera().getyOffset()), null);

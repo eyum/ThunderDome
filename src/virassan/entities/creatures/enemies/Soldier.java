@@ -108,8 +108,8 @@ public class Soldier extends Enemy{
 
 	@Override
 	public void render(Graphics g) {
-		float xrel = vector.normalize().dX ;//* handler.getGameCamera().getWidth();
-		float yrel = vector.normalize().dY ;//* handler.getGameCamera().getHeight();
+		float xrel = position.normalize().dX ;//* handler.getGameCamera().getWidth();
+		float yrel = position.normalize().dY ;//* handler.getGameCamera().getHeight();
 		
 		if(animation.getCurrentFrame() != null){
 			g.drawImage(animation.getCurrentFrame(), (int) (xrel - handler.getGameCamera().getxOffset()), (int) (yrel - handler.getGameCamera().getyOffset()), null);

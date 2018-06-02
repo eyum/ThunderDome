@@ -40,10 +40,15 @@ public class MapRead {
 			jsonObject = (JSONObject)JSONValue.parse(new FileReader(filepath));
 		
 		}catch(FileNotFoundException f){
-			System.out.println("Error Message: MapRead_loadFile FILE NOT FOUND " + filepath);
+			String mesg = "Error Message: MapRead_loadFile FILE NOT FOUND " + filepath;
+			System.out.println(mesg);
+			Utils.addErrorToLog(mesg);
 			f.printStackTrace();
-		}catch(IOException e){
-			System.out.println("Error Message: MapRead_loadFile IO EXCEPTION " + filepath);
+		}catch(Exception e){
+			String mesg = "Error Message: MapRead_loadFile UNKNOWN EXCEPTION " + filepath + System.getProperty("line.separator") +
+					e.getMessage();
+			System.out.println(mesg);
+			Utils.addErrorToLog(mesg);
 			e.printStackTrace();
 		}
 		return jsonObject;
@@ -71,8 +76,12 @@ public class MapRead {
 				}
 			}
 			handler.setMap(new Map(handler, filepath, name, map_id, (int)height, (int)width, (int)spawn_x, (int)spawn_y, worldTiles));
+			handler.getPlayer().setPosition(spawn_x, spawn_y);
 		}catch(Exception e){
-			System.out.println("Error Message: MapRead_loadBasic SOMETHING WENT WRONG.");
+			String mesg = "Error Message: MapRead_loadBasic UNKNOWN EXCEPTION" + System.getProperty("line.separator") +
+					e.getMessage();
+			System.out.println(mesg);
+			Utils.addErrorToLog(mesg);
 			e.printStackTrace();
 		}
 	}
@@ -92,8 +101,11 @@ public class MapRead {
 			try{
 				handler.getEntityManager().addStatic(new Statics(handler, (int)x, (int)y, 64, 64, "warp_portal", mapfile, (int)tempX, (int)tempY, Assets.warp_portal_images, false));
 			}catch(NullPointerException e){
+				String mesg = "Error Message: MapRead_loadStatics NULL VALUE" + System.getProperty("line.separator") + 
+						"mapfile= " + mapfile + ", x= " + x + ", y= " + y + ", tempX= " + tempX + ", tempY= " + tempY;
+				System.out.println(mesg);
+				Utils.addErrorToLog(mesg);
 				e.printStackTrace();
-				System.out.println("Error Message: MapRead_loadStatics Something is null! - mapfile = " + mapfile + ", x= " + x + ", y= " + y + ", tempX= " + tempX + ", tempY= " + tempY);
 			}
 		}
 		JSONArray staticArray = (JSONArray) ((JSONObject)arrays.get(1)).get("statics");
@@ -111,8 +123,10 @@ public class MapRead {
 					try{
 						handler.getMap().setTile((int)x, (int)y, (int)idnum);
 					}catch(NullPointerException e){
+						String mesg = "Error Message: MapRead_loadStatics One of these static json objects are null";
+						System.out.println(mesg);
+						Utils.addErrorToLog(mesg);
 						e.printStackTrace();
-						System.out.println("Error Message: MapRead_loadStatics One of these static json objects are null");
 					}
 				}
 				break;
@@ -132,8 +146,10 @@ public class MapRead {
 						BufferedImage image = temp.sprite(image_x, image_y, image_width, image_height);
 						handler.getEntityManager().addEntity(new Statics(handler, (float)x, (float)y, image));
 					}catch(NullPointerException e){
+						String mesg = "Error Message: MapRead_loadStatics One of the static type json objects is null";
+						System.out.println(mesg);
+						Utils.addErrorToLog(mesg);
 						e.printStackTrace();
-						System.out.println("Error Message: MapRead_loadStatics One of the static type json objects is null");
 					}
 				}
 				break;
@@ -145,7 +161,7 @@ public class MapRead {
 	public static void loadEnemies(Handler handler, JSONObject json){
 		// monsters
 		
-		System.out.println("Message: MapRead_loadEnemies LOADING ENEMIES START");
+		System.out.println("Update Message: MapRead_loadEnemies LOADING ENEMIES START");
 		
 		Random gen = new Random(37274);
 		JSONArray arrays = (JSONArray)json.get("arrays");
@@ -175,8 +191,11 @@ public class MapRead {
 					float perc = rate/100;
 					dropList.add(new Drop(Item.valueOf(item_name), perc));
 				}catch(Exception e){
+					String mesg = "Error Message: MapRead_loadEnemies UNKNOWN EXCEPTION" + System.getProperty("line.separator") +
+							e.getMessage();
+					System.out.println(mesg);
+					Utils.addErrorToLog(mesg);
 					e.printStackTrace();
-					System.out.println("Error Message: MapRead_loadEnemies some json object is null or couldn't find the item");
 				}
 			}
 			Attack attack = new Attack(0, 0, null, 0, null);
@@ -201,7 +220,6 @@ public class MapRead {
 				int tempX = 0;
 				int tempY = 0;
 				for(int k = 0; k < amount; k++){
-					System.out.println("Message: MapRead_loadEnemies k count is: " + k);
 					boolean isEmpty = true;
 					do{
 						tempX += ((gen.nextInt(5) * Tile.TILE_WIDTH) + rect.x);
@@ -235,8 +253,10 @@ public class MapRead {
 					System.out.println("Update Message: MapRead_loadEnemies Monster spawn at: " + entity.getX() + ", " + entity.getY());
 				}
 			}catch(NullPointerException e){
+				String mesg = "Error Message: MapRead_loadEnemies Something went wrong with the spawning.";
+				System.out.println(mesg);
+				Utils.addErrorToLog(mesg);
 				e.printStackTrace();
-				System.out.println("Error Message: MapRead_loadEnemies Something went wrong with the spawning.");
 			}
 		}
 	}
@@ -262,10 +282,14 @@ public class MapRead {
 				handler.getEntityManager().addEntity(n);
 			}
 		}catch(NullPointerException k){
-			System.out.println("Error Message: MapRead_loadNPCs NPC Creation NULL value.");
+			String mesg = "Error Message: MapRead_loadNPCs NPC Creation NULL value.";
+			System.out.println(mesg);
+			Utils.addErrorToLog(mesg);
 			k.printStackTrace();
 		}catch(Exception e){
-			System.out.println("Error Message: MapRead_loadNPCs NPC creation or adding error.");
+			String mesg = "Error Message: MapRead_loadNPCs NPC creation or adding error.";
+			System.out.println(mesg);
+			Utils.addErrorToLog(mesg);
 			e.printStackTrace();
 		}
 	}

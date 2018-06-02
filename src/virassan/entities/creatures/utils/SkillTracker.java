@@ -109,7 +109,7 @@ public class SkillTracker {
 	}
 	
 	public String toString(){
-		return skillType.getName();
+		return skillType.toString();
 	}
 
 	public Rectangle getBounds() {
@@ -127,4 +127,5 @@ public class SkillTracker {
 	public float getCost(){
 		return skillType.getCost();
 	}
+	
 }

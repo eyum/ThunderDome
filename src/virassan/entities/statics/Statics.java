@@ -14,14 +14,14 @@ import virassan.main.Handler;
 public class Statics extends StaticEntity{
 	
 	private Animation anime;
-	private Image image;
+	private BufferedImage image;
 	private String name, newMapID;
 	private String idname = "";
 	private boolean animated;
 	private Rectangle eventBounds;
 	private int spawn_x, spawn_y;
 
-	public Statics(Handler handler, float x, float y, Image image, String entityName) {
+	public Statics(Handler handler, float x, float y, BufferedImage image, String entityName) {
 		super(handler, x, y, Assets.IMAGE_WIDTH, Assets.IMAGE_HEIGHT, image, entityName);
 		bounds.x = width/2 - 2;
 		bounds.y = height - (height/3);
@@ -32,11 +32,11 @@ public class Statics extends StaticEntity{
 		animated = false;
 	}
 	
-	public Statics(Handler handler, float x, float y, Image image){
+	public Statics(Handler handler, float x, float y, BufferedImage image){
 		this(handler, x, y, image, null);
 	}
 	
-	public Statics(Handler handler, float x, float y, int xBound, int yBound, int widthBound, int heightBound, Image image, String entityName) {
+	public Statics(Handler handler, float x, float y, int xBound, int yBound, int widthBound, int heightBound, BufferedImage image, String entityName) {
 		this(handler, x, y, image, entityName);
 		bounds.x = xBound;
 		bounds.y = yBound;
@@ -44,13 +44,13 @@ public class Statics extends StaticEntity{
 		bounds.height = heightBound;
 	}
 	
-	public Statics(Handler handler, float x, float y, int xBound, int yBound, Image image, String entityName) {
+	public Statics(Handler handler, float x, float y, int xBound, int yBound, BufferedImage image, String entityName) {
 		this(handler, x, y, image, entityName);
 		bounds.x = xBound;
 		bounds.y = yBound;
 	}
 	
-	public Statics(Handler handler, float x, float y, Image image, int width, int height, String entityName){
+	public Statics(Handler handler, float x, float y, BufferedImage image, int width, int height, String entityName){
 		this(handler, x, y, image, entityName);
 		this.width = width;
 		this.height = height;
@@ -65,7 +65,7 @@ public class Statics extends StaticEntity{
 	 * @param height
 	 * @param images
 	 */
-	public Statics(Handler handler, float x, float y, int width, int height, Image[] images){
+	public Statics(Handler handler, float x, float y, int width, int height, BufferedImage[] images){
 		super(handler, x, y, width, height);
 		eventBounds = new Rectangle(0, 0, 0, 0);
 		anime = new Animation(200, images);
@@ -84,7 +84,7 @@ public class Statics extends StaticEntity{
 	 * @param images
 	 * @param dimension True means that when the player goes behind the static object, it will "disappear". False means it will "lay flat" against the background
 	 */
-	public Statics(Handler handler, float x, float y, int width, int height, String idname, Image[] images, boolean dimension){
+	public Statics(Handler handler, float x, float y, int width, int height, String idname, BufferedImage[] images, boolean dimension){
 		this(handler, x, y, width, height, images);
 		this.idname = idname;
 		dimensioned = dimension;
@@ -109,7 +109,7 @@ public class Statics extends StaticEntity{
 	 * @param dimension
 	 */
 	public Statics(Handler handler, float x, float y, int width, int height, String idname, String newMapID, 
-			int spawn_x, int spawn_y, Image[] images, boolean dimension){
+			int spawn_x, int spawn_y, BufferedImage[] images, boolean dimension){
 		this(handler, x, y, width, height, idname, images, dimension);
 		this.idname = idname;
 		this.newMapID = newMapID;
@@ -128,8 +128,8 @@ public class Statics extends StaticEntity{
 
 	@Override
 	public void render(Graphics g) {
-		float xrel = vector.normalize().dX ;//* handler.getGameCamera().getWidth();
-		float yrel = vector.normalize().dY ;//* handler.getGameCamera().getHeight();
+		float xrel = position.normalize().dX ;//* handler.getGameCamera().getWidth();
+		float yrel = position.normalize().dY ;//* handler.getGameCamera().getHeight();
 		
 		if(animated){
 			g.drawImage(anime.getCurrentFrame(), (int)(xrel - handler.getGameCamera().getxOffset()), (int)(yrel - handler.getGameCamera().getyOffset()), width, height, null);	
@@ -162,27 +162,27 @@ public class Statics extends StaticEntity{
 	//GETTERS AND SETTERS
 	
 	public void setX(int x){
-		vector.dX = x;
+		position.dX = x;
 	}
 	
 	public void setY(int y){
-		vector.dY = y;
+		position.dY = y;
 	}
 
 	public Image getImage() {
 		return image;
 	}
 
-	public void setImage(Image image) {
+	public void setImage(BufferedImage image) {
 		this.image = image;
 	}
 
 	public float getX() {
-		return vector.dX;
+		return position.dX;
 	}
 
 	public float getY() {
-		return vector.dY;
+		return position.dY;
 	}
 	
 	public String getName(){

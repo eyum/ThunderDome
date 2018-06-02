@@ -18,19 +18,17 @@ public class GameCamera {
 	private float height, width;
 	private Handler handler;
 	
-	public GameCamera(Handler handler, float xOffset, float yOffset){
+	public GameCamera(Handler handler, float xOffset, float yOffset, int width, int height){
 		this.handler = handler;
-		setCameraResolution();
+		setCameraResolution(width, height);
 		this.xOffset = xOffset;
 		this.yOffset = yOffset;
 	}
 
-	public void setCameraResolution(){
-		width = handler.getWidth();
-		//TODO: wait to use until asset scaling is set up
-		//height = width * (9.0f / 16.0f);
-		height = handler.getHeight();
-		System.out.println("GameCamera_setCameraResolution height is: " + height + ", width: " + width);
+	public void setCameraResolution(int w, int h){
+		width = w;
+		height = h;
+		System.out.println("Update Message: GameCamera_setCameraResolution height is: " + height + ", width: " + width);
 	}
 	
 	/**

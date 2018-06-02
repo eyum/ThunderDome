@@ -72,10 +72,14 @@ public class Quest {
 	
 	public void complete(){
 		if(!giveRewards()){
-			System.out.println("Error Message: Quest_complete error with giveRewards()");
+			String mesg = "Error Message: Quest_complete error with giveRewards()";
+			System.out.println(mesg);
+			Utils.addErrorToLog(mesg);
 		}
 		if(!removeItems()){
-			System.out.println("Error Message: Quest_complete error with removeItems()");
+			String mesg = "Error Message: Quest_complete error with removeItems()";
+			System.out.println(mesg);
+			Utils.addErrorToLog(mesg);
 		}
 	}
 	
@@ -83,7 +87,6 @@ public class Quest {
 		try{
 			for(Object o : reqs.keySet()){
 				if(o instanceof Item){
-					System.out.println("Message: Quest_removeItems item amount: " + (int)reqs.get(o));
 					handler.getPlayer().getInventory().removeItems((Item)o, (int)reqs.get(o));
 				}
 			}
@@ -232,7 +235,9 @@ public class Quest {
 			if(isAllReqMet()){
 				dialog = compDia;
 				if(!handler.getPlayer().getQuestLog().completeQuest(this)){
-					System.out.println("Error Message: Quest_questDialog quest not completed: " + name);
+					String mesg = "Error Message: Quest_questDialog quest not completed: " + name;
+					System.out.println(mesg);
+					Utils.addErrorToLog(mesg);
 				}
 			}else{
 				dialog = incompDia;

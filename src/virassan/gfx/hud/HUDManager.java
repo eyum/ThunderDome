@@ -84,8 +84,6 @@ public class HUDManager {
 			}
 		}
 		player.getStats().tick(delta);
-		leftClick();
-		rightClick();
 	}
 	
 	public void render(Graphics g){
@@ -258,28 +256,6 @@ public class HUDManager {
 		g.drawString(healthDisplay, 125 - g.getFontMetrics().stringWidth(healthDisplay), 27);
 	}
 	
-	public void leftClick(){
-		LinkedQueue clicks = mouseInput.getLeftClicks();
-		if(clicks.element() != null){
-			while(clicks.element() != null){
-				Point head = clicks.poll().getObject();
-				double x = head.getX();
-				double y = head.getY();
-				if(exitButton.intersects(x, y, 1, 1)){
-					handler.getGame().close();
-				}
-			}
-		}
-	}
-	
-	public void rightClick(){
-		// TODO : add right click actions?
-		LinkedQueue clicks = mouseInput.getRightClicks();
-		if(handler.getEntityManager().getPaused()){
-			
-		}
-	}
-	
 	public void drag(){
 		//TODO: finish drag implementations
 		if(mouseInput.isDragged()){
@@ -334,4 +310,9 @@ public class HUDManager {
 	public void addSkillList(SkillText text){
 		skillList.add(text);
 	}
+	
+	public Rectangle getExitButton(){
+		return exitButton;
+	}
+	
 }

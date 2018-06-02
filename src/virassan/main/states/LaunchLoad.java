@@ -12,6 +12,7 @@ import virassan.main.Display;
 import virassan.main.Handler;
 import virassan.utils.DatabaseConnect;
 import virassan.utils.SaveRead;
+import virassan.utils.Utils;
 
 public class LaunchLoad {
 
@@ -49,11 +50,20 @@ public class LaunchLoad {
 		
 		else if(curLoadCount == 1){
 			mapID = SaveRead.loadMapID(json);
-			System.out.println("Message: LaunchLoad_tick MAPID IS: " + mapID);
+			System.out.println("Update Message: LaunchLoad_tick Loading map MAPID is: " + mapID);
 			if(mapID == null){
-				System.out.println("Error Message: LaunchLoad_tick MAPID IS NULL");
+				String mesg = "Error Message: LaunchLoad_tick MAPID IS NULL";
+				System.out.println(mesg);
+				Utils.addErrorToLog(mesg);
 			}
-			handler.setMapID(mapID);
+			try{
+				handler.setMapID(mapID);
+			}catch(NullPointerException e){
+				String mesg = "Error Message: LaunchLoad_tick MAPID IS NULL";
+				System.out.println(mesg);
+				Utils.addErrorToLog(mesg);
+				e.printStackTrace();
+			}
 			curLoadCount++;
 		}
 		

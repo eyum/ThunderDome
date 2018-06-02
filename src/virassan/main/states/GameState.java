@@ -17,6 +17,7 @@ import virassan.input.LinkedQueue;
 import virassan.input.MouseInput;
 import virassan.items.ItemManager;
 import virassan.main.Handler;
+import virassan.utils.Utils;
 import virassan.world.maps.Map;
 
 public class GameState {
@@ -147,7 +148,6 @@ public class GameState {
 		LinkedQueue clicks = mouseInput.getLeftClicks();
 		if(player.getSkillActive()){
 			if(clicks.element() != null){
-				System.out.println("UpdateMessage: GameState_leftClick");
 				outer :{
 					while(clicks.element() != null){
 						Point head = clicks.poll().getObject();
@@ -157,9 +157,11 @@ public class GameState {
 						try{
 							target = player.getActiveSkill().getTarget();
 						}catch(NullPointerException e){
-							System.out.println("Error Message: GameState_leftClick Active Skill is null");
-							System.out.println("Active Skill is: " + player.getActiveSkill());
-							System.out.println("Player Skills: " + player.getSkills());
+							String mesg = "Error Message: GameState_leftClick Active Skill is null" + System.getProperty("line.separator") +
+									"Active Skill is: " + player.getActiveSkill() + System.getProperty("line.separator") +
+									"Player Skills: " + player.getSkills();
+							System.out.println(mesg);
+							Utils.addErrorToLog(mesg);
 							e.printStackTrace();
 						}
 						for(Entity e : handler.getEntityManager().getEntities()){
@@ -167,11 +169,7 @@ public class GameState {
 								if(new Rectangle((int)x, (int)y, 1, 1).intersects(new Rectangle((int)(e.getX() - handler.getGameCamera().getxOffset()), (int)(e.getY() - handler.getGameCamera().getyOffset()), e.getWidth(), e.getHeight()))){
 									player.skillAction(player.getActiveSkill().getTarget(), player.getActiveSkill(), e);
 									break outer;
-								}else{
-									System.out.println("UpdateMessage: GameState_leftClick no enemy found");
 								}
-							}else{
-								
 							}
 						}
 					}
@@ -225,6 +223,9 @@ public class GameState {
 								break outer;
 							}
 						}
+					}
+					if(hud.getExitButton().intersects(x, y, 1, 1)){
+						handler.getGame().close();
 					}
 				}
 			}

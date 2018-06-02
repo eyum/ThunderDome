@@ -10,6 +10,7 @@ import virassan.gfx.Assets;
 import virassan.gfx.GameCamera;
 import virassan.input.KeyInput;
 import virassan.input.MouseInput;
+import virassan.utils.Utils;
 
 /**
  * Creates the Game, complete with gameloop!
@@ -27,6 +28,7 @@ public class Game implements Runnable{
 	private BufferStrategy bs;
 	private Graphics g;
 	
+	public static final String errorLogFilename = Utils.createErrorLog();
 	public static Handler handler;
 	
 	//Input
@@ -81,11 +83,11 @@ public class Game implements Runnable{
 		((Graphics2D) g).setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
 		
 		//Clear Screen
-		g.clearRect(0, 0, handler.getWidth(), handler.getHeight());
+		g.clearRect(0, 0, display.getWidth(), display.getHeight());
 		//Draw Here!
 		//((Graphics2D)g).scale(((float)Display.HEIGHT * (16.0f / 9.0f)) / 1024.0f, ((float)Display.HEIGHT) / 520.0f);
 		g.setColor(Color.white);
-		g.fillRect(0, 0, handler.getWidth(), handler.getHeight());
+		g.fillRect(0, 0, display.getWidth(), display.getHeight());
 		handler.render(g);
 		
 		//End Drawing!

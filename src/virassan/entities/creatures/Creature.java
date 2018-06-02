@@ -76,15 +76,15 @@ public abstract class Creature extends Entity{
 	public boolean attack(Item weapon, Creature entity){
 		float crit = ((float)gen.nextInt(100))/ 100F;
 		int range = weapon.getWeapRange();
-		double distance = Math.sqrt(Math.pow((vector.dX + (width/2)) - (entity.getX() + (entity.getWidth()/2)), 2) + 
-				Math.pow((vector.dY + (height/2)) - (entity.getY()+ (entity.getHeight()/2)), 2));
+		double distance = Math.sqrt(Math.pow((position.dX + (width/2)) - (entity.getX() + (entity.getWidth()/2)), 2) + 
+				Math.pow((position.dY + (height/2)) - (entity.getY()+ (entity.getHeight()/2)), 2));
 		if(distance <= range){
 			float temp = weapon.getDmgAmt() + (float)(weapon.getDmgAmt() * stats.getDmgMod());
 			if(crit < stats.getCritChance()){
 				float critAmt = (temp * stats.getCritMult());
 				temp += critAmt;
 				if(entity instanceof Enemy){
-					stats.getEventList().add(new EventText(this, handler, "CRITICAL HIT", (int)vector.dX, (int)vector.dY));
+					stats.getEventList().add(new EventText(this, handler, "CRITICAL HIT", (int)position.dX, (int)position.dY));
 				}
 			}
 			entity.getStats().damage(temp - (entity.getStats().getArmorRating() * entity.getStats().getArmorPer()));
@@ -146,14 +146,16 @@ public abstract class Creature extends Entity{
 				}
 			}
 		}else{
-			System.out.println("Error Message: Creature_attack attackRange is <= 0: " + attackRange);
+			String mesg = "Error Message: Creature_attack attackRange is <= 0: " + attackRange;
+			System.out.println(mesg);
+			Utils.addErrorToLog(mesg);
 		}
 		return false;
 	}
 	
 	public boolean collisionAttack(Entity e){
-		double distance = Math.sqrt( Math.pow( (e.getX() +( e.getWidth() / 2 ) ) - ( vector.dX + ( this.width / 2 ) ), 2 ) + 
-				Math.pow( ( e.getY() + ( e.getHeight() / 2 ) ) - ( vector.dY + ( this.height / 2 ) ), 2 ) );
+		double distance = Math.sqrt( Math.pow( (e.getX() +( e.getWidth() / 2 ) ) - ( position.dX + ( this.width / 2 ) ), 2 ) + 
+				Math.pow( ( e.getY() + ( e.getHeight() / 2 ) ) - ( position.dY + ( this.height / 2 ) ), 2 ) );
 		if(distance <= attackRange){
 			return true;
 		}

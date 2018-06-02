@@ -14,7 +14,7 @@ import virassan.utils.Vector2F;
 public abstract class Entity {
 
 	protected Handler handler;
-	protected Vector2F vector;
+	protected Vector2F position;
 	protected float velX, velY; //speed
 	protected int width, height;
 	protected boolean isDead;
@@ -31,7 +31,7 @@ public abstract class Entity {
 	 */
 	public Entity(Handler handler, float x, float y, int width, int height){
 		this.handler = handler;
-		vector = new Vector2F(x,y);
+		position = new Vector2F(x,y);
 		this.width = width;
 		this.height = height;
 		bounds = new Rectangle(0,0, width, height);
@@ -45,7 +45,7 @@ public abstract class Entity {
 	 * @return rectangle the collision box
 	 */
 	public Rectangle getCollisionBounds(float xOffset, float yOffset){
-		return new Rectangle((int) (vector.dX + bounds.x + xOffset), (int) (vector.dY + bounds.y + yOffset), bounds.width, bounds.height);
+		return new Rectangle((int) (position.dX + bounds.x + xOffset), (int) (position.dY + bounds.y + yOffset), bounds.width, bounds.height);
 	}
 	
 	/**
@@ -115,7 +115,7 @@ public abstract class Entity {
 	 * @param x
 	 */
 	public void setX(float x) {
-		vector.dX = x;
+		position.dX = x;
 	}
 
 	/**
@@ -123,11 +123,19 @@ public abstract class Entity {
 	 * @param y
 	 */
 	public void setY(float y) {
-		vector.dY = y;
+		position.dY = y;
+	}
+	
+	public void setPosition(Vector2F pos){
+		position = pos;
+	}
+	
+	public void setPosition(float x, float y){
+		setPosition(new Vector2F(x, y));
 	}
 	
 	public Vector2F getCenter(){
-		return new Vector2F(vector.dX + (width/2), vector.dY + (height/2));
+		return new Vector2F(position.dX + (width/2), position.dY + (height/2));
 	}
 	
 	/**
@@ -154,7 +162,7 @@ public abstract class Entity {
 	 */
 	public float getX()
 	{
-		return vector.dX;
+		return position.dX;
 	}
 	
 	/**
@@ -163,7 +171,7 @@ public abstract class Entity {
 	 */
 	public float getY()
 	{
-		return vector.dY;
+		return position.dY;
 	}
 	
 	/**

@@ -74,7 +74,7 @@ public class Player extends Creature{
 	 * @param id
 	 */
 	public Player(Handler handler){
-		this(handler, 0, 0, 32, 32, "/textures/entities/player.png");
+		this(handler, 0, 0, 32, 32, Utils.entityAssetPath + "player.png");
 	}
 	
 	/**
@@ -114,7 +114,7 @@ public class Player extends Creature{
 		initAnimation(filepath);
 		
 		//Traits
-		traits = new Traits(this, 3, 5, 3, 5, 2);
+		traits = new Traits(this);
 		
 		//Skills
 		skillBar = new SkillTracker[5];
@@ -156,8 +156,8 @@ public class Player extends Creature{
 				s.tick(delta);
 			}
 			animation.tick(delta);
-			vector.dY = Utils.clamp((int)vector.dY, 0, handler.getMap().getHeight() * Tile.TILE_HEIGHT - height);
-			vector.dX = Utils.clamp((int)vector.dX, 0, handler.getMap().getWidth() * Tile.TILE_WIDTH - width);
+			position.dY = Utils.clamp((int)position.dY, 0, handler.getMap().getHeight() * Tile.TILE_HEIGHT - height);
+			position.dX = Utils.clamp((int)position.dX, 0, handler.getMap().getWidth() * Tile.TILE_WIDTH - width);
 			handler.getGameCamera().centerOnEntity(this);
 			if(stats.isDamaged()){
 				if(damageTime > 0){
@@ -212,8 +212,8 @@ public class Player extends Creature{
 	 * @param g The Graphics for the Game
 	 */
 	public void render(Graphics g) {
-		float xrel = vector.normalize().dX ;//* handler.getGameCamera().getWidth();
-		float yrel = vector.normalize().dY ;//* handler.getGameCamera().getHeight();
+		float xrel = position.normalize().dX ;//* handler.getGameCamera().getWidth();
+		float yrel = position.normalize().dY ;//* handler.getGameCamera().getHeight();
 		
 		if(animation.getCurrentFrame() != null){
 			g.drawImage(animation.getCurrentFrame(), (int) (xrel - handler.getGameCamera().getxOffset()), (int) (yrel - handler.getGameCamera().getyOffset()), null);
@@ -382,6 +382,18 @@ public class Player extends Creature{
 		gold = Utils.clamp(gold + amt, 0F, 999999999F);
 	}
 	
+	public void addNewSkill(SkillTracker skill){
+		skillList.add(skill);
+		for(int i = 0; i < skillBar.length; i++){
+			if(skillBar[i] == null){
+				skillBar[i] = skill;
+				break;
+			}else{
+				System.out.println("Update Message: Player_addNewSkill No Empty Slots in SkillBar");
+			}
+		}
+	}
+	
 	public void addSkill(SkillTracker skill){
 		skillList.add(skill);
 	}
@@ -412,7 +424,9 @@ public class Player extends Creature{
 	
 	public void setNPCMet(String npcID){
 		if(npcMetLiked.containsKey(npcID)){
-			System.out.println("Error Message: Player_setNPCMet NPC_ALREADY_MET");
+			String mesg = "Error Message: Player_setNPCMet NPC_ALREADY_MET";
+			System.out.println(mesg);
+			Utils.addErrorToLog(mesg);
 		}else{
 			npcMetLiked.put(npcID, new ArrayList<Boolean>(Arrays.asList(true, true)));
 		}

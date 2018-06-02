@@ -67,7 +67,7 @@ public abstract class Enemy extends Creature{
 			if(attackTimer >= defaultAttack.getSpeed()){
 				isAttack = super.attack(defaultAttack);
 				if(!isAttack){
-					stats.getList().add(new BouncyText(handler, "Miss!", Color.WHITE, (int)vector.dX, (int)vector.dY));
+					stats.getList().add(new BouncyText(handler, "Miss!", Color.WHITE, (int)position.dX, (int)position.dY));
 				}
 				attackTimer = 0;
 			}
@@ -76,7 +76,7 @@ public abstract class Enemy extends Creature{
 	}
 	
 	public float getPlayerDist(){
-		return (float)Math.sqrt((double)(Math.pow(vector.dX - handler.getPlayer().getX(), 2) + Math.pow(vector.dY - handler.getPlayer().getY(), 2)));
+		return (float)Math.sqrt((double)(Math.pow(position.dX - handler.getPlayer().getX(), 2) + Math.pow(position.dY - handler.getPlayer().getY(), 2)));
 	}
 	
 	public boolean isAggroDistance(){
@@ -124,8 +124,7 @@ public abstract class Enemy extends Creature{
 			if(drops[i].isDropped()){
 				int xran = new Random().nextInt(32);
 				int yran = new Random().nextInt(32);
-				drops[i].setPos(new Vector2F(vector.dX + xran, vector.dY + yran));
-				System.out.println("Message: Enemy_droppedItems Item Pos: " + drops[i].getPos());
+				drops[i].setPos(new Vector2F(position.dX + xran, position.dY + yran));
 				handler.getItemManager().addItem(drops[i]);
 			}
 		}

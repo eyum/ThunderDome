@@ -5,6 +5,7 @@ import java.util.HashMap;
 
 import virassan.entities.creatures.npcs.Quest;
 import virassan.utils.DatabaseConnect;
+import virassan.utils.Utils;
 
 public class QuestLog {
 
@@ -38,7 +39,9 @@ public class QuestLog {
 			System.out.println("Update Message: QuestLog_addQuest Quest added: " + quest.getName());
 			return true;
 		}catch(Exception e){
-			System.out.println("Error Message: QuestLog_addQuest Error with adding Quest: " + quest.getName());
+			String mesg = "Error Message: QuestLog_addQuest Error with adding Quest: " + quest.getName();
+			System.out.println(mesg);
+			Utils.addErrorToLog(mesg);
 			e.printStackTrace();
 			return false;
 		}

@@ -7,9 +7,14 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.FilenameFilter;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.nio.file.StandardOpenOption;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -20,6 +25,7 @@ import virassan.entities.creatures.utils.BuffTracker;
 import virassan.entities.creatures.utils.SkillTracker;
 import virassan.items.Equip;
 import virassan.items.Item;
+import virassan.main.Game;
 import virassan.main.Handler;
 
 /**
@@ -28,6 +34,14 @@ import virassan.main.Handler;
  *
  */
 public class Utils {
+	
+	public static final String saveDir = "res/saves/";
+	public static final String mapDir = "res/worlds/maps/";
+	public static final String staticAssetDir = "res/textures/";
+	public static final String entityAssetDir = "res/textures/entities/";
+	public static final String entityAssetPath = "/textures/entities/";
+	public static final String errorLogDir = "res\\logs\\";
+	
 	
 	public static File[] fileFinder(String dirName, String fileExt){
         File dir = new File(dirName);
@@ -146,6 +160,71 @@ public class Utils {
 		}
 		return map;
 	}
+	
+	/**
+	 * Creates an error log text file
+	 * @return
+	 */
+	public static String createErrorLog(){
+		File[] files = Utils.fileFinder(errorLogDir, ".txt");
+		Long lastMod = Long.MAX_VALUE;
+		File choice = null;
+		if(files.length > 8){
+			for(File f : files){
+				if(f.lastModified() < lastMod){
+					choice = f;
+					lastMod = f.lastModified();
+				}
+			}
+		}
+		if(choice != null){
+			boolean p = choice.delete();
+			if(!p){
+				System.out.println("Error Message: Utils_createErrorLog Failed to delete file");
+			}
+		}
+		
+		String filepath = null;
+		DateTimeFormatter dateTimeFormat = DateTimeFormatter.ofPattern("ss_mm_HH-yy_MM_dd");
+		LocalDateTime now = LocalDateTime.now();
+		filepath = errorLogDir + now.format(dateTimeFormat) + ".txt";
+		try{
+			File file = new File(filepath);
+			boolean b = file.createNewFile();
+			if(!b){
+				System.out.println("Error Message: Utils_createErrorLog File not created - " + filepath);
+			}
+		}catch(IOException e){
+			e.printStackTrace();
+		}
+		
+		return filepath;
+	}
+	
+	/**
+	 * Appends the errorlog text file
+	 * @param s The error message to be appended to the file
+	 */
+	public static void addErrorToLog(String s){
+		try{
+			DateTimeFormatter dateTimeFormat = DateTimeFormatter.ofPattern("HH:mm:ss");
+			LocalDateTime now = LocalDateTime.now();
+			String time = now.format(dateTimeFormat);
+			s = s + " " + time + System.getProperty("line.separator");
+			Files.write(Paths.get(Game.errorLogFilename), s.getBytes(), StandardOpenOption.APPEND);
+		}catch(IOException e){
+			System.out.println("Error Message: Utils_addErrorToLog Could not append to file");
+			e.printStackTrace();
+		}catch(Exception k){
+			System.out.println("Error Message: Utils_addErrorToLog UNKNOWN EXCEPTION");
+			k.printStackTrace();
+		}
+	}
+	
+	
+	// SAVE GAME UTILS
+	//TODO: fix and replace and move these methods to the Save class
+	
 	
 	/**
 	 * For Mapping Quest Requirement current Amounts

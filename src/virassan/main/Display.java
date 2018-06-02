@@ -40,7 +40,8 @@ public class Display {
 		//setFullScreen(dm, frame);
 		
 	}
-	/*
+	
+	
 	public void setFullScreen(DisplayMode dm, JFrame frame){
 		vc.setFullScreenWindow(frame);
 		
@@ -53,7 +54,7 @@ public class Display {
 		}
 		
 	}
-	*/
+	
 	
 	public void restoreScreen(){
 		Window w = vc.getFullScreenWindow();
