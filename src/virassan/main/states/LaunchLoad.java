@@ -3,14 +3,10 @@ package virassan.main.states;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
-import java.util.HashMap;
 
 import org.json.simple.JSONObject;
 
-import virassan.entities.creatures.npcs.Quest;
-import virassan.main.Display;
 import virassan.main.Handler;
-import virassan.utils.DatabaseConnect;
 import virassan.utils.SaveRead;
 import virassan.utils.Utils;
 

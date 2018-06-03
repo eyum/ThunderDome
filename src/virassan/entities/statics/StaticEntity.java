@@ -1,6 +1,5 @@
 package virassan.entities.statics;
 
-import java.awt.Image;
 import java.awt.image.BufferedImage;
 
 import virassan.entities.Entity;
@@ -13,7 +12,7 @@ public abstract class StaticEntity extends Entity{
 	protected Stats stats;
 	protected boolean dimensioned;
 	
-	public StaticEntity(Handler handler, float x, float y, int width, int height, Image image, String entityName) {
+	public StaticEntity(Handler handler, float x, float y, int width, int height, BufferedImage image, String entityName) {
 		super(handler, x, y, width, height);
 		dimensioned = true;
 	}

@@ -282,19 +282,6 @@ public class Assets {
 				}
 			}
 		}
-		/*
-		for(int j = 0; j < 4; j++){
-			if(j == 0){
-				walkingUp[0] = sheet.sprite(j * imageWidth, 4 * imageHeight, imageWidth, imageHeight);
-			}else if(j == 1){
-				walkingDown[0] = sheet.sprite(j * imageWidth, 4 * imageHeight, imageWidth, imageHeight);
-			}else if(j == 2){
-				walkingRight[0] = sheet.sprite(j * imageWidth, 4 * imageHeight, imageWidth, imageHeight);
-			}else if(j == 3){
-				walkingLeft[0] = sheet.sprite(j * imageWidth, 4 * imageHeight, imageWidth, imageHeight);
-			}
-		}
-		*/
 	}
 
 

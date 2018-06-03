@@ -2,7 +2,6 @@ package virassan.utils;
 
 import java.awt.Rectangle;
 
-import virassan.main.Display;
 import virassan.main.Game;
 
 /**

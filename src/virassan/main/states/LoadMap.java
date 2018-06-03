@@ -6,7 +6,6 @@ import java.awt.Graphics;
 
 import org.json.simple.JSONObject;
 
-import virassan.main.Display;
 import virassan.main.Handler;
 import virassan.utils.DatabaseConnect;
 import virassan.utils.MapRead;

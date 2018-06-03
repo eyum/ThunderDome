@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Set;
 
+import virassan.entities.Entity;
 import virassan.items.Item;
 import virassan.main.Game;
 import virassan.main.Handler;
@@ -186,11 +187,19 @@ public class Dialog {
 						}
 						Handler.NPCDIALOG.setNextDialog(Handler.NPCDIALOG.getDialog(nextDialogID));
 						//TODO: add the stuff for nextDialogNPCID
+						// change current npc to dialognpcid
+						for(Entity e : Game.handler.getEntityManager().getEntities()){
+							if(e instanceof NPC){
+								if(((NPC)e).getNPCID().equals(nextDialogNPCID)){
+									Game.handler.getPlayer().setCurrentNPC((NPC)e);
+								}
+							}
+						}
 					}
 				}
 			}
 		}catch(NullPointerException k){
-			String mesg = "Error Message: Dialog_dialog something is NULL." + System.getProperty("line.separator") + "Current Event Info: " + currentEventInfo;
+			String mesg = "Error Message: Dialog_dialog NULL VALUE" + System.getProperty("line.separator") + "Current Event Info: " + currentEventInfo;
 			System.out.println(mesg);
 			Utils.addErrorToLog(mesg);
 			k.printStackTrace();

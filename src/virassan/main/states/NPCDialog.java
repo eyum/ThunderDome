@@ -17,7 +17,6 @@ import virassan.gfx.hud.HUDManager;
 import virassan.input.KeyInput;
 import virassan.input.LinkedQueue;
 import virassan.input.MouseInput;
-import virassan.main.Display;
 import virassan.main.Handler;
 import virassan.utils.Utils;
 
@@ -36,7 +35,6 @@ public class NPCDialog {
 	private int respCurSelect;
 	private ArrayList<Dialog> responses;
 	private Dialog nextDialog;
-	private String nextNPC;
 	private Random gen;
 	
 	public NPCDialog(Handler handler) {
@@ -97,19 +95,6 @@ public class NPCDialog {
 			if(HUDManager.MENUTIMER > HUDManager.MENUWAIT){
 				if(keyInput.A){
 					if(nextDialog != null){ //if there is a nextDialog, switch to that
-						
-						/*
-						if(!player.getCurrentNPC().getNPCID().equals(nextNPC)){
-							for(Entity e : handler.getEntityManager().getEntities()){
-								if(e instanceof NPC){
-									System.out.println("Update Message: NPCDialog_tick switching currentNPC: " + nextNPC);
-									player.setCurrentNPC((NPC)e);
-									currentNPC = player.getCurrentNPC();
-								}
-							}
-						}
-						*/
-						
 						setCurrentDialog();
 					}else if(nextDialog == null){ //if there is no nextDialog, close out of interaction with the NPC
 						closeNPCDialog();
@@ -123,7 +108,7 @@ public class NPCDialog {
 		}
 	}
 	
-	public void leftClick(){
+	private void leftClick(){
 		LinkedQueue clicks = mouseInput.getLeftClicks();
 		if(isResponseMenu){
 			if(clicks.element() != null){
@@ -136,27 +121,12 @@ public class NPCDialog {
 							if(mouseInput.getMouseBounds().intersects(responseMenu.get(i))){
 								responses.get(i).run();
 								if(nextDialog != null){ //if there is a nextDialog, switch to that
-									
-									/*
-									if(!player.getCurrentNPC().getNPCID().equals(nextNPC)){
-										for(Entity e : handler.getEntityManager().getEntities()){
-											if(e instanceof NPC){
-												System.out.println("Update Message: NPCDialog_leftClick switching currentNPC: " + nextNPC);
-												player.setCurrentNPC((NPC)e);
-												currentNPC = player.getCurrentNPC();
-											}
-										}
-									}
-									*/
-									
 									isResponseMenu = false;
 									setCurrentDialog();
 									break outer;
 								}else{
-									System.out.println("Message: NPCDialog_leftClick nextDialog is: " + nextDialog);
+									System.out.println("Update Message: NPCDialog_leftClick nextDialog is: " + nextDialog);
 								}
-							}else{
-								//System.out.println("Message: NPCDialog_leftClick does not intersect: " + mouseInput.getMouseBounds() + "mouse , " + responseMenu.get(i) + "responseMenu rect");
 							}
 						}
 					}
@@ -167,14 +137,14 @@ public class NPCDialog {
 		}
 	}
 	
-	public void rightClick(){
+	private void rightClick(){
 		LinkedQueue clicks = mouseInput.getRightClicks();
 		if(handler.getEntityManager().getPaused()){
 
 		}
 	}
 	
-	public void hover(){
+	private void hover(){
 		if(isResponseMenu){
 			for(Rectangle rect : responseMenu){
 				if(mouseInput.getMouseBounds().intersects(rect)){
@@ -288,10 +258,6 @@ public class NPCDialog {
 	
 	public Dialog getNextDialog(){
 		return nextDialog;
-	}
-	
-	public void setNextNPC(String npcID){
-		nextNPC = npcID;
 	}
 	
 	public Dialog getCurrentDialog(){

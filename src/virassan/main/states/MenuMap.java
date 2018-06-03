@@ -41,7 +41,7 @@ public class MenuMap {
 		HUDManager.MENULAST = System.currentTimeMillis();
 	}
 	
-	public void leftClick(){
+	private void leftClick(){
 		LinkedQueue clicks = mouseInput.getLeftClicks();
 		if(!mouseInput.isDragged()){
 			if(clicks.element() != null){
@@ -54,7 +54,7 @@ public class MenuMap {
 		}
 	}
 	
-	public void rightClick(){
+	private void rightClick(){
 		LinkedQueue clicks = mouseInput.getRightClicks();
 		if(clicks.element() != null){
 			outer: {
@@ -65,19 +65,21 @@ public class MenuMap {
 		}
 	}
 	
-	public void hover(){
+	private void hover(){
 		if(!mouseInput.isDragged()){
 			Rectangle curMouse = mouseInput.getMouseBounds();
 			//TODO: stuff!
 		}
 	}
 	
-	public void drag(){
+	private void drag(){
 		if(mouseInput.isDragged()){
 			isDragged = true;
 			Rectangle startRect =  new Rectangle(mouseInput.getStartDrag().x, mouseInput.getStartDrag().y, 1, 1);
 			outer: {
 				//TODO: stuff!
+				
+				break outer;
 			}
 		}else{
 			if(isDragged){

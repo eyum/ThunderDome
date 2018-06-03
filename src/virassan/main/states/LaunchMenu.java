@@ -5,6 +5,7 @@ import java.awt.Graphics;
 import java.io.File;
 
 import virassan.input.KeyInput;
+import virassan.input.LinkedQueue;
 import virassan.input.MouseInput;
 import virassan.main.Handler;
 import virassan.utils.Utils;
@@ -33,6 +34,7 @@ public class LaunchMenu {
 	}
 	
 	public void tick(double delta){
+		leftClick();
 		if(isSave){
 			boolean saveFile = new File(Utils.saveDir + "testsave2.json").isFile();
 			keyInput.tick(delta);
@@ -53,6 +55,12 @@ public class LaunchMenu {
 				handler.setState(States.LaunchNew);
 			}
 		}
+	}
+	
+	private void leftClick(){
+		//TODO: make an actual launch menu - Oh~ fancy i know
+		LinkedQueue clicks = mouseInput.getLeftClicks();
+		
 	}
 
 }

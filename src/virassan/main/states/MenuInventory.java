@@ -18,7 +18,6 @@ import virassan.input.MouseInput;
 import virassan.items.Equip;
 import virassan.items.Item;
 import virassan.items.ItemType;
-import virassan.main.Display;
 import virassan.main.Handler;
 import virassan.utils.ScrollPanel;
 import virassan.utils.Utils;
@@ -89,7 +88,7 @@ public class MenuInventory {
 		renderMenuTabs(g);
 	}
 	
-	public void renderCurTab(Graphics g){
+	private void renderCurTab(Graphics g){
 		String food = "Food";
 		String weap = "Weapons";
 		String arm = "Armor";
@@ -125,7 +124,7 @@ public class MenuInventory {
 		g.drawString(misc, 700 - 40 - g.getFontMetrics().stringWidth(misc), y);
 	}
 	
-	public void renderCharacterInfo(Graphics g){
+	private void renderCharacterInfo(Graphics g){
 		int center = (64/2) - (Assets.ITEM_HEIGHT/2);
 		for(Equip equip : player.getStats().getEquip().keySet()){
 			Image image = null;
@@ -192,7 +191,7 @@ public class MenuInventory {
 		}
 	}
 	
-	public void renderItems(Graphics g){
+	private void renderItems(Graphics g){
 		Rectangle[][] slots = inv.getSlots();
 		g.setColor(Color.WHITE);
 		g.setFont(new Font("Verdana", Font.PLAIN, 18));
@@ -214,7 +213,7 @@ public class MenuInventory {
 		}
 	}
 	
-	public void renderItemDragging(Graphics g){
+	private void renderItemDragging(Graphics g){
 		if(mouseInput.isDragged()){
 			if(curItem != null){
 				g.drawImage(curItem.getImage(), Utils.clamp(mouseInput.getDragged().x + 
@@ -224,7 +223,7 @@ public class MenuInventory {
 		}
 	}
 	
-	public void renderItemMenu(Graphics g){
+	private void renderItemMenu(Graphics g){
 		g.setColor(Handler.ITEM_MENU);
 		g.fillRect(curMenu.x, curMenu.y, curMenu.width, curMenu.height);
 		g.setColor(Color.WHITE);
@@ -250,7 +249,7 @@ public class MenuInventory {
 		g.fillRect(selection.x, selection.y, selection.width, selection.height);		
 	}
 	
-	public void renderItemInfo(Graphics g){
+	private void renderItemInfo(Graphics g){
 		g.setColor(Handler.ITEM_MENU);
 		int infox = curPoint.x + 32;
 		int infoy = curPoint.y + 32;
@@ -265,7 +264,7 @@ public class MenuInventory {
 		itemScroll.render(g);
 	}
 	
-	public void renderItemName(Graphics g){
+	private void renderItemName(Graphics g){
 		if(itemName != null && !displayItemMenu){
 			g.setColor(Handler.SELECTION_LOWLIGHT);
 			g.fillRect(mouseInput.getMouseX() - 3, mouseInput.getMouseY() - 17, g.getFontMetrics().stringWidth(itemName) - (g.getFontMetrics().stringWidth(itemName)/5) , g.getFontMetrics().getHeight() + 2);
@@ -275,7 +274,7 @@ public class MenuInventory {
 		}
 	}
 	
-	public void renderMenuTabs(Graphics g){
+	private void renderMenuTabs(Graphics g){
 		g.setFont(new Font("Verdana", Font.BOLD, 32));
 		String inventory = "Inventory";
 		String questlog = "Quest Log";
@@ -302,7 +301,7 @@ public class MenuInventory {
 		keyInput();
 	}
 	
-	public void invItemMenu(Point item, Point mouse){
+	private void invItemMenu(Point item, Point mouse){
 		displayItemMenu = true;
 		if(!equipItemMenu){
 			curItem = inv.getItemSlots(curTab)[item.x][item.y];
@@ -316,7 +315,7 @@ public class MenuInventory {
 		itemMenu = new Rectangle[]{new Rectangle(mouse.x, mouse.y, 80, 25), new Rectangle(mouse.x, mouse.y + 25, 80, 25)};	
 	}
 	
-	public void keyInput(){
+	private void keyInput(){
 		HUDManager.MENUTIMER += (System.currentTimeMillis() - HUDManager.MENULAST);
 		HUDManager.MENULAST = System.currentTimeMillis();
 		if(HUDManager.MENUTIMER > HUDManager.MENUWAIT){
@@ -372,7 +371,7 @@ public class MenuInventory {
 		}
 	}
 	
-	public void leftClick(){
+	private void leftClick(){
 		LinkedQueue clicks = mouseInput.getLeftClicks();
 		if(!mouseInput.isDragged()){
 			if(displayItemMenu){
@@ -508,7 +507,7 @@ public class MenuInventory {
 		}
 	}
 	
-	public void rightClick(){
+	private void rightClick(){
 		LinkedQueue clicks = mouseInput.getRightClicks();
 		if(clicks.element() != null){
 			outer: {
@@ -546,7 +545,7 @@ public class MenuInventory {
 		}
 	}
 	
-	public void drag(){
+	private void drag(){
 		if(mouseInput.isDragged()){
 			isDragged = true;
 			Rectangle startRect =  new Rectangle(mouseInput.getStartDrag().x, mouseInput.getStartDrag().y, 1, 1);
@@ -607,7 +606,7 @@ public class MenuInventory {
 		}
 	}
 	
-	public void hover(){
+	private void hover(){
 		if(!mouseInput.isDragged()){
 			if(displayItemMenu){
 				for(int i = 0; i < itemMenu.length; i++){

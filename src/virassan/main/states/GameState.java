@@ -55,7 +55,7 @@ public class GameState {
 		keyInput();
 	}
 	
-	public void keyInput(){
+	private void keyInput(){
 		HUDManager.MENUTIMER += (System.currentTimeMillis() - HUDManager.MENULAST);
 		HUDManager.MENULAST = System.currentTimeMillis();
 		boolean pause = handler.getEntityManager().getPaused();
@@ -69,7 +69,6 @@ public class GameState {
 					HUDManager.MENUTIMER = 0;
 				} // Character Sheet
 				else if(keyInput.C){
-					//TODO: possibly add a detailed Character Info Page with stuff like "Slimes killed: 20" etc
 					HUDManager.MENUTIMER = 0;
 					handler.getEntityManager().setPaused(true);
 					handler.setState(States.MenuCharacter);
@@ -144,7 +143,7 @@ public class GameState {
 		}
 	}
 	
-	public void leftClick(){
+	private void leftClick(){
 		LinkedQueue clicks = mouseInput.getLeftClicks();
 		if(player.getSkillActive()){
 			if(clicks.element() != null){
@@ -232,8 +231,10 @@ public class GameState {
 		}
 	}
 	
-	public void rightClick(){
+	private void rightClick(){
 		// TODO : add right click actions!
+		// Maybe used right click to interact with static objects
+		// maybe use right click on merchant to skip any dialog and go straight to merchant screen
 		LinkedQueue clicks = mouseInput.getRightClicks();
 		if(handler.getEntityManager().getPaused()){
 			
@@ -244,11 +245,15 @@ public class GameState {
 		}
 	}
 	
-	public void hover(){
-		
+	private void hover(){
+		//TODO: add hover actions
+		// show npc name when hover over their avatar
+		// show enemy name, level, and health
 	}
 	
-	public void drag(){
+	private void drag(){
+		//TODO: any possible drag actions?
+		// maybe for some skills the mouse is dragged??
 		if(mouseInput.isDragged()){
 			isDragged = true;
 			Rectangle startRect =  new Rectangle(mouseInput.getStartDrag().x, mouseInput.getStartDrag().y, 1, 1);
@@ -278,6 +283,9 @@ public class GameState {
 		handler.getMap().render(g);
 		hud.render(g);
 	}
+	
+	
+	// GETTERS AND SETTERS
 	
 	public ItemManager getItemManager(){
 		return hud.getItemManager();

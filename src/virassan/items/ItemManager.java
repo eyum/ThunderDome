@@ -8,7 +8,6 @@ import java.util.concurrent.CopyOnWriteArrayList;
 import virassan.entities.creatures.utils.Move;
 import virassan.gfx.Assets;
 import virassan.gfx.hud.ItemPickUp;
-import virassan.main.Display;
 import virassan.main.Handler;
 
 public class ItemManager{

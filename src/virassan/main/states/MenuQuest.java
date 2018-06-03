@@ -104,7 +104,7 @@ public class MenuQuest {
 		}
 	}
 	
-	public void leftClick(){
+	private void leftClick(){
 		LinkedQueue clicks = mouseInput.getLeftClicks();
 		if(handler.getEntityManager().getPaused()){
 			if(clicks.element() != null){
@@ -139,7 +139,7 @@ public class MenuQuest {
 		}
 	}
 	
-	public void rightClick(){
+	private void rightClick(){
 		// TODO : add right click actions!
 		LinkedQueue clicks = mouseInput.getRightClicks();
 		if(handler.getEntityManager().getPaused()){
@@ -147,7 +147,7 @@ public class MenuQuest {
 		}
 	}
 	
-	public void hover(){
+	private void hover(){
 		
 	}
 }

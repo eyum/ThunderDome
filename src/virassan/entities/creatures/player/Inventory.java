@@ -246,19 +246,6 @@ public class Inventory{
 		return null;
 	}
 	
-	public Point getItemSlotIndex(Item item){
-		Item[][] items = getItemSlots(item.getItemType());
-		Point temp = null;
-		for(int i = 0; i < items.length; i++){
-			for(int k = 0; k < items[i].length; k++){
-				if(item == items[i][k]){
-					return new Point(k, i);
-				}
-			}
-		}
-		return temp;
-	}
-	
 	public Item[][] getItemSlots(ItemType item){
 		Item[][] items = new Item[8][5];
 		switch(item){

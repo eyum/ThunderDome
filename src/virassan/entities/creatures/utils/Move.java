@@ -6,7 +6,6 @@ import virassan.entities.Entity;
 import virassan.entities.creatures.Creature;
 import virassan.entities.creatures.enemies.Enemy;
 import virassan.items.Drop;
-import virassan.main.Display;
 import virassan.main.Handler;
 import virassan.utils.Utils;
 import virassan.utils.Vector2F;
@@ -24,7 +23,7 @@ public class Move {
 		return false;
 	}
 	
-	public static int getHomingDirection(Vector2F v1){
+	private static int getHomingDirection(Vector2F v1){
 		int dir = -1;
 		dir = v1.angleToDirection(v1.getAngle(Handler.GAMESTATE.getPlayer().getCenter()));
 		return dir;
@@ -239,9 +238,4 @@ public class Move {
 	private static boolean collisionWithTile(int x, int y){
 		return Handler.GAMESTATE.getMap().getTile(x, y).isSolid();
 	}
-	
-	private float collisionDamage(int x, int y){
-		return Handler.GAMESTATE.getMap().getTile(x, y).getCollisionDamage();
-	}
-	
 }

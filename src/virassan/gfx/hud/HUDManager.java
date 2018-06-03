@@ -3,17 +3,14 @@ package virassan.gfx.hud;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
-import java.awt.Point;
 import java.awt.Rectangle;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 import virassan.entities.creatures.player.Player;
 import virassan.entities.creatures.utils.SkillTracker;
 import virassan.input.KeyInput;
-import virassan.input.LinkedQueue;
 import virassan.input.MouseInput;
 import virassan.items.ItemManager;
-import virassan.main.Display;
 import virassan.main.Game;
 import virassan.main.Handler;
 import virassan.utils.Utils;
@@ -36,7 +33,6 @@ public class HUDManager {
 	private float waitTime = 300;
 	private long lastTime;
 	private long timer = 0;
-	private boolean isDragged;
 	
 	private final Rectangle exitButton;
 	
@@ -84,6 +80,7 @@ public class HUDManager {
 			}
 		}
 		player.getStats().tick(delta);
+		hover();
 	}
 	
 	public void render(Graphics g){
@@ -125,7 +122,7 @@ public class HUDManager {
 		g.drawString(handler.getGameCamera().getxOffset() + " " + handler.getGameCamera().getyOffset(), handler.getWidth() - 90, 65);
 	}
 	
-	public void renderExitButton(Graphics g){
+	private void renderExitButton(Graphics g){
 		g.setColor(Color.BLACK);
 		g.setFont(new Font("Verdana", Font.PLAIN, 20));
 		g.drawString("X", handler.getWidth() - 50, 90);
@@ -133,7 +130,7 @@ public class HUDManager {
 		g.drawRect(exitButton.x, exitButton.y, exitButton.width, exitButton.height);
 	}
 	
-	public void renderSkillBar(Graphics g){
+	private void renderSkillBar(Graphics g){
 		g.setColor(Color.GRAY);
 		int rectx = (handler.getWidth() / 2) - 80;
 		int recty = 10;
@@ -159,7 +156,7 @@ public class HUDManager {
 		}
 	}
 	
-	public void renderExpBar(Graphics g){
+	private void renderExpBar(Graphics g){
 		float maxExp = handler.getPlayer().getStats().getMaxExperience();
 		float exp = handler.getPlayer().getStats().getLevelExperience(handler.getPlayer().getStats().getLevel() - 1);
 		float playerExp = handler.getPlayer().getStats().getExperience() - exp;
@@ -177,7 +174,7 @@ public class HUDManager {
 		g.drawString(expDisplay, 120 - g.getFontMetrics().stringWidth(expDisplay), 92);
 	}
 	
-	public void renderManaBar(Graphics g){
+	private void renderManaBar(Graphics g){
 		g.setColor(Handler.MANA_BLUE);
 		g.fillRect(10, 60, (int)(150 * (handler.getPlayer().getStats().getMana() / handler.getPlayer().getStats().getMaxMana())), 15);
 		g.setColor(Color.BLACK);
@@ -195,7 +192,7 @@ public class HUDManager {
 		g.drawString(manaDisplay, 115 - g.getFontMetrics().stringWidth(manaDisplay), 72);
 	}
 	
-	public void renderStaminaBar(Graphics g){
+	private void renderStaminaBar(Graphics g){
 		g.setColor(Handler.STAMINA_GREEN);
 		g.fillRect(10, 40, (int)(150 * (handler.getPlayer().getStats().getStamina() / handler.getPlayer().getStats().getMaxStam())), 15);
 		g.setColor(Color.BLACK);
@@ -213,7 +210,7 @@ public class HUDManager {
 		g.drawString(stamDisplay, 122 - g.getFontMetrics().stringWidth(stamDisplay), 52);
 	}
 	
-	public void renderHealthBar(Graphics g){
+	private void renderHealthBar(Graphics g){
 		//Red Removed Health bar
 		if(!handler.getPlayer().getStats().isDamaged()){
 			timer += System.currentTimeMillis() - lastTime;
@@ -256,29 +253,7 @@ public class HUDManager {
 		g.drawString(healthDisplay, 125 - g.getFontMetrics().stringWidth(healthDisplay), 27);
 	}
 	
-	public void drag(){
-		//TODO: finish drag implementations
-		if(mouseInput.isDragged()){
-			isDragged = true;
-			Rectangle startRect =  new Rectangle(mouseInput.getStartDrag().x, mouseInput.getStartDrag().y, 1, 1);
-		}else{
-			if(isDragged){
-				Rectangle startRect, endRect;
-				try{
-					startRect =  new Rectangle(mouseInput.getStartDrag().x, mouseInput.getStartDrag().y, 1, 1);
-				}catch(NullPointerException e){
-					startRect = new Rectangle(0, 0, 0, 0);
-				}try{
-					endRect = new Rectangle(mouseInput.getEndDrag().x, mouseInput.getEndDrag().y, 1, 1);
-				}catch(NullPointerException e){
-					endRect = new Rectangle(0, 0, 0, 0);
-				}
-			}
-			isDragged = false;
-		}
-	}
-	
-	public void hover(){
+	private void hover(){
 		if(handler.getEntityManager().getPaused()){
 			
 		}else{

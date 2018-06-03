@@ -15,13 +15,13 @@ public class MenuCharacter {
 	private MouseInput mouseInput;
 	private KeyInput keyInput;
 	
-	//TODO: do up this entire thing
+	//TODO: possibly add a detailed Character Info Page with stuff like "Slimes killed: 20" etc
 	
 	public MenuCharacter(Handler handler) {
 		this.handler = handler;
 		mouseInput = handler.getMouseInput();
 		keyInput = handler.getKeyInput();
-		
+		player = handler.getPlayer();
 	}
 
 	
@@ -32,6 +32,7 @@ public class MenuCharacter {
 	
 	public void tick(double delta){
 		player = handler.getPlayer();
+		keyInput();
 		drag();
 		if(!mouseInput.getLeftClicks().isEmpty()){
 			leftClick();
@@ -44,19 +45,23 @@ public class MenuCharacter {
 		HUDManager.MENULAST = System.currentTimeMillis();
 	}
 	
-	public void leftClick(){
+	private void keyInput(){
 		
 	}
 	
-	public void rightClick(){
+	private void leftClick(){
 		
 	}
 	
-	public void drag(){
+	private void rightClick(){
 		
 	}
 	
-	public void hover(){
+	private void drag(){
+		
+	}
+	
+	private void hover(){
 		
 	}
 }

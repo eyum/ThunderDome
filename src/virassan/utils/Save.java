@@ -2,18 +2,15 @@ package virassan.utils;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.concurrent.CopyOnWriteArrayList;
 
-import virassan.entities.creatures.enemies.EnemyType;
-import virassan.entities.creatures.npcs.Quest;
 import virassan.entities.creatures.player.Player;
-import virassan.entities.creatures.utils.BuffTracker;
-import virassan.entities.creatures.utils.SkillTracker;
 import virassan.items.Equip;
 import virassan.items.Item;
 
+//TODO: cannot use serialization so possibly continue using JSON
+
 /**
- * Save is the class that will hold all necessary Save data that can then be Serialized and Written to a file (elsewhere)
+ * Save will collect all data to be written to a JSON file and organizes it
  * @author Virassan
  *
  */
@@ -25,14 +22,12 @@ public class Save {
 	
 	private int charisma, strength, resilience, dexterity, intelligence;
 	
-	private HashMap<String, Boolean> quests;
-	
-	private ArrayList<SkillTracker> skillList;
-	private SkillTracker[] skillBar;
-	
-	//private CopyOnWriteArrayList<BuffTracker> buffs;
-	
-	private HashMap<EnemyType, Integer> killList;
+	//TODO: use NPC, Enemy, and Quest IDs for save data
+	private ArrayList<String> quests;
+	private HashMap<String, Integer> killList;
+	private HashMap<String, ArrayList<Boolean>> npcLikedMet;
+	private ArrayList<String> skills;
+	private ArrayList<String> skillBar;
 	
 	// Retrieved via Player's Stats
 	private HashMap<Equip, Item> equips;
@@ -61,9 +56,9 @@ public class Save {
 		intelligence = player.getTraits().getIntelligence();
 		
 		// QUESTS
-		quests = new HashMap<>();
-		for(Quest q : player.getQuestLog().getAllQuests().keySet()){
-			quests.put(q.getQUEST_ID(), player.getQuestLog().getAllQuests().get(q));
+		quests = new ArrayList<>();
+		for(String q : player.getQuestLog().getAllQuestIDs()){
+			quests.add(q);
 		}
 		
 		// ITEMS

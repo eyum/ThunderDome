@@ -7,7 +7,6 @@ import java.awt.RenderingHints;
 import java.awt.image.BufferStrategy;
 
 import virassan.gfx.Assets;
-import virassan.gfx.GameCamera;
 import virassan.input.KeyInput;
 import virassan.input.MouseInput;
 import virassan.utils.Utils;

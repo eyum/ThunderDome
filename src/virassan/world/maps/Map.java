@@ -4,7 +4,6 @@ import java.awt.Graphics;
 
 import virassan.entities.EntityManager;
 import virassan.gfx.Assets;
-import virassan.main.Display;
 import virassan.main.Handler;
 import virassan.utils.Utils;
 import virassan.utils.Vector2F;

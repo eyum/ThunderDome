@@ -5,11 +5,9 @@ import java.awt.Graphics;
 import java.util.ArrayList;
 import java.util.Comparator;
 
-import virassan.entities.creatures.enemies.Enemy;
 import virassan.entities.creatures.npcs.Merchant;
 import virassan.entities.creatures.player.Player;
 import virassan.entities.statics.StaticEntity;
-import virassan.main.Display;
 import virassan.main.Handler;
 import virassan.utils.Utils;
 

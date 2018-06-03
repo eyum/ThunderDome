@@ -4,7 +4,6 @@ import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -282,12 +281,13 @@ public class MapRead {
 				handler.getEntityManager().addEntity(n);
 			}
 		}catch(NullPointerException k){
-			String mesg = "Error Message: MapRead_loadNPCs NPC Creation NULL value.";
+			String mesg = "Error Message: MapRead_loadNPCs NULL VALUE";
 			System.out.println(mesg);
 			Utils.addErrorToLog(mesg);
 			k.printStackTrace();
 		}catch(Exception e){
-			String mesg = "Error Message: MapRead_loadNPCs NPC creation or adding error.";
+			String mesg = "Error Message: MapRead_loadNPCs UNKNOWN EXCEPTION" + System.getProperty("line.separator") +
+					e.getMessage();
 			System.out.println(mesg);
 			Utils.addErrorToLog(mesg);
 			e.printStackTrace();

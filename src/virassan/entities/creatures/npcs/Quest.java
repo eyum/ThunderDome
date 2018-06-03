@@ -3,9 +3,7 @@ package virassan.entities.creatures.npcs;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import virassan.entities.creatures.enemies.Enemy;
 import virassan.entities.creatures.enemies.EnemySpecies;
-import virassan.entities.creatures.enemies.EnemyType;
 import virassan.entities.creatures.player.Player;
 import virassan.items.Item;
 import virassan.main.Handler;

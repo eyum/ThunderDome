@@ -12,7 +12,6 @@ import virassan.gfx.hud.HUDManager;
 import virassan.input.KeyInput;
 import virassan.input.LinkedQueue;
 import virassan.input.MouseInput;
-import virassan.main.Display;
 import virassan.main.Handler;
 import virassan.utils.ScrollPanel;
 import virassan.utils.Utils;
@@ -115,7 +114,7 @@ public class MenuSettings {
 	}
 	
 	
-	public void leftClick(){
+	private void leftClick(){
 		LinkedQueue clicks = mouseInput.getLeftClicks();
 		if(clicks.element() != null){
 			outer: {
@@ -138,7 +137,7 @@ public class MenuSettings {
 		}
 	}
 	
-	public void rightClick(){
+	private void rightClick(){
 		
 	}
 	

@@ -33,7 +33,7 @@ public class Display {
 		//height = vc.getDisplayMode().getHeight();
 		width = 1240;
 		height = 900;
-		DisplayMode dm = new DisplayMode(width, height, DisplayMode.BIT_DEPTH_MULTI, DisplayMode.REFRESH_RATE_UNKNOWN);
+		//DisplayMode dm = new DisplayMode(width, height, DisplayMode.BIT_DEPTH_MULTI, DisplayMode.REFRESH_RATE_UNKNOWN);
 		this.title = title;
 		createDisplay();
 		
@@ -64,8 +64,7 @@ public class Display {
 		vc.setFullScreenWindow(null);
 	}
 	
-	public void createDisplay()
-	{
+	private void createDisplay(){
 		frame = new JFrame(title);
 		frame.setUndecorated(true);
 		frame.setSize(width, height);
@@ -83,6 +82,9 @@ public class Display {
 		frame.add(canvas);
 		frame.pack();	
 	}
+	
+	
+	// GETTERS AND SETTERS
 	
 	public JFrame getFrame(){
 		return frame;

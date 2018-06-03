@@ -1,7 +1,6 @@
 package virassan.gfx;
 
 import virassan.entities.Entity;
-import virassan.main.Display;
 import virassan.main.Handler;
 import virassan.utils.Utils;
 import virassan.world.maps.Tile;

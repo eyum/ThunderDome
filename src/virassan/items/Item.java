@@ -1,6 +1,5 @@
 package virassan.items;
 
-import java.awt.Image;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -212,7 +211,6 @@ public enum Item{
 		return image.getWidth();
 	}
 	
-	//FIXME: how to get height of Image?
 	public int getHeight(){
 		return image.getHeight();
 	}

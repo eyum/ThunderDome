@@ -123,6 +123,16 @@ public class NPCShop {
 	public void tick(double delta){
 		player = handler.getPlayer();
 		inv = player.getInventory();
+		
+		drag();
+		if(!mouseInput.getLeftClicks().isEmpty()){
+			leftClick();
+		}
+		if(!mouseInput.getRightClicks().isEmpty()){
+			rightClick();
+		}
+		hover();
+		
 		Merchant curMerc = player.getCurrentMerchant();
 		int itemIndex = curMerc.getCurList().size()-1;
 		if(curMerc.getCurList().size() <= 0){
@@ -187,7 +197,7 @@ public class NPCShop {
 		}
 	}
 	
-	public void leftClick(){
+	private void leftClick(){
 		LinkedQueue clicks = mouseInput.getLeftClicks();
 		if(clicks.element() != null){
 			outer : {
@@ -198,7 +208,7 @@ public class NPCShop {
 		}
 	}
 	
-	public void rightClick(){
+	private void rightClick(){
 		// TODO : add right click actions!
 		LinkedQueue clicks = mouseInput.getRightClicks();
 		if(handler.getEntityManager().getPaused()){
@@ -206,11 +216,11 @@ public class NPCShop {
 		}
 	}
 	
-	public void hover(){
+	private void hover(){
 		
 	}
 	
-	public void drag(){
+	private void drag(){
 		if(mouseInput.isDragged()){
 			isDragged = true;
 			Rectangle startRect =  new Rectangle(mouseInput.getStartDrag().x, mouseInput.getStartDrag().y, 1, 1);
