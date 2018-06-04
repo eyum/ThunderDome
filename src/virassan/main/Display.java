@@ -19,8 +19,11 @@ public class Display {
 	private JFrame frame;
 	private Canvas canvas;
 	private String title;
+	private DisplayMode dm;
 	//public static int WIDTH = 1280, HEIGHT = (int)(WIDTH * (9.0f / 16.0f));
 	private int width, height;
+	private int windowWidth, windowHeight;
+	private int displayWidth, displayHeight;
 	
 	private GraphicsDevice vc;
 	//public int WIDTH = 1280, HEIGHT = WIDTH / 16 * 9;
@@ -29,22 +32,32 @@ public class Display {
 	{
 		GraphicsEnvironment genv = GraphicsEnvironment.getLocalGraphicsEnvironment();
 		vc = genv.getDefaultScreenDevice();
-		//width = vc.getDisplayMode().getWidth();
-		//height = vc.getDisplayMode().getHeight();
-		width = 1240;
-		height = 900;
-		//DisplayMode dm = new DisplayMode(width, height, DisplayMode.BIT_DEPTH_MULTI, DisplayMode.REFRESH_RATE_UNKNOWN);
+		windowWidth = 1240;
+		windowHeight = 900;
+		height = windowHeight;
+		width = windowWidth;
+		displayWidth = vc.getDisplayMode().getWidth();
+		displayHeight = vc.getDisplayMode().getHeight();
+		dm = new DisplayMode(displayWidth, displayHeight, DisplayMode.BIT_DEPTH_MULTI, DisplayMode.REFRESH_RATE_UNKNOWN);
 		this.title = title;
 		createDisplay();
-		
-		//setFullScreen(dm, frame);
-		
 	}
 	
+	public void toggleFullScreen(){
+		System.out.println("Update Message: Display_toggleFullScreen b is " + isFullScreen());
+		if(!isFullScreen()){
+			setFullScreen();
+		}else{
+			restoreScreen();
+		}
+	}
 	
-	public void setFullScreen(DisplayMode dm, JFrame frame){
+	private void setFullScreen(){
+		Window w = vc.getFullScreenWindow();
+		if(w != null){
+			w.dispose();
+		}
 		vc.setFullScreenWindow(frame);
-		
 		if(dm != null && vc.isDisplayChangeSupported()){
 			try{
 				vc.setDisplayMode(dm);
@@ -52,11 +65,23 @@ public class Display {
 				e.printStackTrace();
 			}
 		}
-		
+		width = displayWidth;
+		height = displayHeight;
+		frame.setVisible(true);
 	}
 	
+	private void restoreScreen(){
+		Window w = vc.getFullScreenWindow();
+		if(w != null){
+			w.dispose();
+		}
+		vc.setFullScreenWindow(null);
+		frame.setVisible(true);
+		width = windowWidth;
+		height = windowHeight;
+	}
 	
-	public void restoreScreen(){
+	public void removeFullScreen(){
 		Window w = vc.getFullScreenWindow();
 		if(w != null){
 			w.dispose();
@@ -85,6 +110,13 @@ public class Display {
 	
 	
 	// GETTERS AND SETTERS
+	
+	public boolean isFullScreen(){
+		if(vc.getFullScreenWindow() == null){
+			return false;
+		}
+		return true;
+	}
 	
 	public JFrame getFrame(){
 		return frame;

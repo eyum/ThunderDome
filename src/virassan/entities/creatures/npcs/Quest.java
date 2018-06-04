@@ -155,13 +155,13 @@ public class Quest {
 			}
 		}else if(questReq instanceof String){
 			if(handler.getPlayer().getKillEnemyID().containsKey((String)questReq)){
-				if(getCurAmt(questReq) == (int)reqs.get(questReq)){
+				if(getCurAmt(questReq) >= (int)reqs.get(questReq)){
 					return true;
 				}
 			}
 		}else if(questReq instanceof EnemySpecies){
 			if(handler.getPlayer().getKillEnemySpecies().containsKey((EnemySpecies)questReq)){
-				if(getCurAmt(questReq) == (int)reqs.get(questReq)){
+				if(getCurAmt(questReq) >= (int)reqs.get(questReq)){
 					return true;
 				}
 			}
@@ -224,8 +224,8 @@ public class Quest {
 	}
 	
 	/**
-	 * Checks if the player currently has the quest with the quest_id passed, and the status of that quest and then executes the proper dialog.
-	 * @param quest_id
+	 * Returns with the dialog appropriate to the status of the quest
+	 * @return
 	 */
 	public String questDialog(){
 		String dialog = "";

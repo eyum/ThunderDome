@@ -27,7 +27,7 @@ public class Game implements Runnable{
 	private BufferStrategy bs;
 	private Graphics g;
 	
-	public static final String errorLogFilename = Utils.createErrorLog();
+	public static final String errorLogFilename = Utils.createErrorLogFilename();
 	public static Handler handler;
 	
 	//Input
@@ -129,7 +129,7 @@ public class Game implements Runnable{
 	}
 	
 	public void close(){
-		display.restoreScreen();
+		display.removeFullScreen();
 		System.exit(0);
 		
 	}

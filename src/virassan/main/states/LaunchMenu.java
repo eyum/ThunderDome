@@ -15,7 +15,8 @@ public class LaunchMenu {
 	private Handler handler;
 	private MouseInput mouseInput;
 	private KeyInput keyInput;
-	
+	private long menuTimer, menuLast;
+	private final long menuWait = 200;
 	private boolean isSave;
 	
 	public LaunchMenu(Handler handler) {
@@ -23,6 +24,8 @@ public class LaunchMenu {
 		mouseInput = handler.getMouseInput();
 		keyInput = handler.getKeyInput();
 		isSave = true;
+		menuTimer = 0;
+		menuLast = 0;
 	}
 	
 	public void render(Graphics g){
@@ -30,29 +33,42 @@ public class LaunchMenu {
 			g.setColor(Color.BLACK);
 			g.drawString("To Start a New Game press ENTER", 200, 190);
 			g.drawString("To Load the Last Save press SPACE", 200, 220);
+			g.drawString("To toggle Fullscreen press F", 200, 300);
 		}
 	}
 	
 	public void tick(double delta){
 		leftClick();
+		menuTimer += (System.currentTimeMillis() - menuLast);
+		menuLast = System.currentTimeMillis();
 		if(isSave){
 			boolean saveFile = new File(Utils.saveDir + "testsave2.json").isFile();
-			keyInput.tick(delta);
 			if(saveFile){
-				if(keyInput.space){
-					String filepath = "";
-					File[] files = Utils.fileFinder(Utils.saveDir, ".json");
-					filepath = files[files.length - 1].toString();
-					Handler.LAUNCHLOAD.setFilepath(filepath);
-					isSave = false;
-					handler.setState(States.LaunchLoad);
+				if(menuTimer > menuWait){
+					if(keyInput.space){
+						String filepath = "";
+						File[] files = Utils.fileFinder(Utils.saveDir, ".json");
+						filepath = files[files.length - 1].toString();
+						Handler.LAUNCHLOAD.setFilepath(filepath);
+						isSave = false;
+						menuTimer = 0;
+						handler.setState(States.LaunchLoad);
+					}
 				}
 			}else{
 				isSave = false;
 			}
+		}
+		if(menuTimer > menuWait){
 			if(keyInput.enter){
 				isSave = false;
 				handler.setState(States.LaunchNew);
+				menuTimer = 0;
+			}
+			if(keyInput.F){
+				//TODO: have the game switch fullscreen on/off
+				handler.toggleFullScreen();
+				menuTimer = 0;
 			}
 		}
 	}
@@ -63,4 +79,9 @@ public class LaunchMenu {
 		
 	}
 
+	
+	private void setWindowSize(int height, int width){
+		
+	}
+	
 }

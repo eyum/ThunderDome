@@ -16,6 +16,7 @@ import virassan.input.LinkedQueue;
 import virassan.input.MouseInput;
 import virassan.main.Handler;
 import virassan.utils.ScrollPanel;
+import virassan.utils.Utils;
 
 public class MenuQuest {
 
@@ -60,7 +61,8 @@ public class MenuQuest {
 			g.drawString(quests.get(curQuestIndex).getDesc(), x, y);
 			for(Object obj : quests.get(curQuestIndex).getReqs().keySet()){
 				y += 20;
-				g.drawString(obj + ": " + quests.get(curQuestIndex).getCurAmt(obj) + "/" + quests.get(curQuestIndex).getReqs().get(obj), x + 150, y);
+				int amount = Utils.clamp(quests.get(curQuestIndex).getCurAmt(obj), 0, (int)quests.get(curQuestIndex).getReqs().get(obj));
+				g.drawString(obj + ": " + amount + "/" + quests.get(curQuestIndex).getReqs().get(obj), x + 150, y);
 			}
 		}
 		g.setFont(new Font("Verdana", Font.BOLD, 32));

@@ -34,7 +34,7 @@ public class HUDManager {
 	private long lastTime;
 	private long timer = 0;
 	
-	private final Rectangle exitButton;
+	private Rectangle exitButton;
 	
 	private float dmgScaleIncr = 0.01f;
 	
@@ -127,6 +127,7 @@ public class HUDManager {
 		g.setFont(new Font("Verdana", Font.PLAIN, 20));
 		g.drawString("X", handler.getWidth() - 50, 90);
 		g.setColor(Color.RED);
+		exitButton = new Rectangle(handler.getWidth() - 55, 70, 25, 25);
 		g.drawRect(exitButton.x, exitButton.y, exitButton.width, exitButton.height);
 	}
 	

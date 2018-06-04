@@ -269,15 +269,23 @@ public class Handler {
 	}
 
 	public int getWidth(){
-		return (int)gameCamera.getWidth();
+		return game.getDisplayWidth();
 	}
 	
 	public int getHeight(){
-		return (int)gameCamera.getHeight();
+		return game.getDisplayHeight();
 	}
 	
 	public GameCamera getGameCamera(){
 		return gameCamera;
+	}
+	
+	public void toggleFullScreen(){
+		game.getDisplay().toggleFullScreen();
+	}
+	
+	public boolean isFullScreen(){
+		return game.getDisplay().isFullScreen();
 	}
 	
 	public KeyInput getKeyInput(){

@@ -161,11 +161,22 @@ public class Utils {
 		return map;
 	}
 	
+	public static String createErrorLogFilename(){
+		String filepath = null;
+		
+		DateTimeFormatter dateTimeFormat = DateTimeFormatter.ofPattern("ss_mm_HH-yy_MM_dd");
+		LocalDateTime now = LocalDateTime.now();
+		filepath = errorLogDir + now.format(dateTimeFormat) + ".txt";
+		
+		return filepath;
+	}
+	
 	/**
 	 * Creates an error log text file
 	 * @return
 	 */
-	public static String createErrorLog(){
+	private static boolean createErrorLog(String filepath){
+		boolean successful = false;
 		File[] files = Utils.fileFinder(errorLogDir, ".txt");
 		Long lastMod = Long.MAX_VALUE;
 		File choice = null;
@@ -182,23 +193,19 @@ public class Utils {
 			if(!p){
 				System.out.println("Error Message: Utils_createErrorLog Failed to delete file");
 			}
-		}
-		
-		String filepath = null;
-		DateTimeFormatter dateTimeFormat = DateTimeFormatter.ofPattern("ss_mm_HH-yy_MM_dd");
-		LocalDateTime now = LocalDateTime.now();
-		filepath = errorLogDir + now.format(dateTimeFormat) + ".txt";
+		}	
 		try{
 			File file = new File(filepath);
 			boolean b = file.createNewFile();
 			if(!b){
 				System.out.println("Error Message: Utils_createErrorLog File not created - " + filepath);
 			}
+			successful = true;
 		}catch(IOException e){
 			e.printStackTrace();
 		}
 		
-		return filepath;
+		return successful;
 	}
 	
 	/**
@@ -207,11 +214,15 @@ public class Utils {
 	 */
 	public static void addErrorToLog(String s){
 		try{
+			String filename = Game.errorLogFilename;
+			if(!(new File(errorLogDir + filename)).isFile()){
+				createErrorLog(filename);
+			}
 			DateTimeFormatter dateTimeFormat = DateTimeFormatter.ofPattern("HH:mm:ss");
 			LocalDateTime now = LocalDateTime.now();
 			String time = now.format(dateTimeFormat);
 			s = s + " " + time + System.getProperty("line.separator");
-			Files.write(Paths.get(Game.errorLogFilename), s.getBytes(), StandardOpenOption.APPEND);
+			Files.write(Paths.get(filename), s.getBytes(), StandardOpenOption.APPEND);
 		}catch(IOException e){
 			System.out.println("Error Message: Utils_addErrorToLog Could not append to file");
 			e.printStackTrace();

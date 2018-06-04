@@ -206,17 +206,18 @@ public class NPCDialog {
 	}
 	
 	public void setInteractDialog(Dialog dialog){
-		if(dialog.getText().equals("")){
-			dialog.run();
-			currentNPC.setCurrentDialog(nextDialog);
-		}else{
-			currentNPC.setCurrentDialog(dialog);
-			nextDialog = null;
-			currentNPC.getCurrentDialog().run();
-		}
 		if(dialog.getText() == null){
 			if(nextDialog != null){
 				setInteractDialog(nextDialog);
+			}
+		}else{
+			if(dialog.getText().equals("")){
+				dialog.run();
+				currentNPC.setCurrentDialog(nextDialog);
+			}else{
+				currentNPC.setCurrentDialog(dialog);
+				nextDialog = null;
+				currentNPC.getCurrentDialog().run();
 			}
 		}
 		if(!dialog.getResponses().isEmpty()){
